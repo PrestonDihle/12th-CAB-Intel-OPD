@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>From Signal to System &middot; Intelligence OPD</title>
+<meta name="description" content="A three-session, case-study-based intelligence OPD fusing traditional analysis, data-driven methods, and AI. Companion site for Exercise NORTH WATCH.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#EEF1F4; --grid:#E3E8EC; --panel:#FFFFFF; --panel2:#F1F4F7;
+    --line:#D6DDE3; --line2:#C0CAD2;
+    --text:#16202B; --dim:#55626E; --faint:#8794A0;
+    --amber:#9A6510; --amber-dim:#B98A2E;
+    --steel:#15636B; --steel-dim:#A9CACE;
+    --green:#2E8049; --green-bnr:#1E6B3A;
+    --red:#B23A28;
+    --font-display:'Saira Condensed',system-ui,sans-serif;
+    --font:'IBM Plex Sans',system-ui,sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,monospace;
+    --nav-w:248px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:var(--font); font-size:16px; line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    background-image:
+      linear-gradient(var(--grid) 1px,transparent 1px),
+      linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+    background-size:64px 64px;
+    background-position:-1px -1px;
+  }
+  a{color:var(--steel); text-decoration:none}
+  a:hover{color:var(--amber)}
+  ::selection{background:var(--amber); color:#fff}
+  strong{color:#0C141C; font-weight:600}
+
+  /* Classification banner (authentic green, unchanged across themes) */
+  .classbar{
+    background:var(--green-bnr); color:#EAF6EE;
+    font-family:var(--mono); font-size:11px; font-weight:500;
+    letter-spacing:.18em; text-align:center; padding:5px 8px;
+    text-transform:uppercase;
+  }
+
+  /* Layout */
+  .shell{display:flex; min-height:100vh}
+  nav.side{
+    width:var(--nav-w); flex:0 0 var(--nav-w);
+    border-right:1px solid var(--line); background:var(--panel);
+    position:sticky; top:0; align-self:flex-start; height:100vh;
+    padding:22px 0; overflow-y:auto;
+  }
+  .brand{padding:0 22px 18px; border-bottom:1px solid var(--line); margin-bottom:14px}
+  .brand .tag{font-family:var(--mono); font-size:10px; letter-spacing:.2em; color:var(--amber); text-transform:uppercase}
+  .brand .nm{font-family:var(--font-display); font-weight:700; font-size:21px; letter-spacing:.04em; line-height:1.05; margin-top:6px; text-transform:uppercase}
+  .navlist{list-style:none; margin:0; padding:0}
+  .navlist a{
+    display:flex; align-items:center; gap:10px; padding:9px 22px;
+    color:var(--dim); font-size:13.5px; font-weight:500; border-left:2px solid transparent;
+  }
+  .navlist a .ix{font-family:var(--mono); font-size:11px; color:var(--faint); min-width:20px}
+  .navlist a:hover{color:var(--text); background:var(--panel2)}
+  .navlist a.active{color:var(--amber); border-left-color:var(--amber); background:var(--panel2)}
+  .navlist a.active .ix{color:var(--amber)}
+  .navfoot{padding:16px 22px; margin-top:10px; border-top:1px solid var(--line); font-family:var(--mono); font-size:10.5px; color:var(--faint); line-height:1.7}
+  .reset{margin-top:10px; width:100%; background:transparent; border:1px solid var(--line2); color:var(--dim); font-family:var(--mono); font-size:10.5px; letter-spacing:.1em; padding:8px; cursor:pointer; text-transform:uppercase}
+  .reset:hover{border-color:var(--red); color:var(--red)}
+
+  main{flex:1 1 auto; min-width:0; max-width:980px; padding:0 clamp(20px,4vw,56px) 80px}
+
+  /* Mobile topbar */
+  .topbar{display:none; position:sticky; top:0; z-index:40; background:var(--panel); border-bottom:1px solid var(--line); padding:12px 18px; align-items:center; justify-content:space-between}
+  .topbar .nm{font-family:var(--font-display); font-weight:700; letter-spacing:.04em; text-transform:uppercase; font-size:16px}
+  .menubtn{background:var(--panel2); border:1px solid var(--line2); color:var(--text); font-family:var(--mono); font-size:12px; padding:7px 12px; cursor:pointer; letter-spacing:.1em}
+
+  /* Sections */
+  section{padding:56px 0 12px; scroll-margin-top:16px}
+  .eyebrow{font-family:var(--mono); font-size:11px; letter-spacing:.22em; color:var(--amber); text-transform:uppercase; display:flex; align-items:center; gap:9px; margin-bottom:10px}
+  .eyebrow::before{content:""; width:18px; height:2px; background:var(--amber); display:inline-block}
+  h1{font-family:var(--font-display); font-weight:700; text-transform:uppercase; letter-spacing:.02em; line-height:.98; font-size:clamp(38px,6vw,62px); margin:0 0 14px}
+  h2{font-family:var(--font-display); font-weight:600; text-transform:uppercase; letter-spacing:.03em; font-size:clamp(26px,3.4vw,34px); margin:0 0 8px; line-height:1.05}
+  h3{font-family:var(--font-display); font-weight:600; text-transform:uppercase; letter-spacing:.05em; font-size:18px; margin:24px 0 10px; color:var(--text)}
+  h4{font-family:var(--mono); font-weight:600; text-transform:uppercase; letter-spacing:.12em; font-size:12.5px; color:var(--amber); margin:18px 0 8px}
+  p{margin:0 0 14px}
+  .lead{font-size:18px; color:var(--text)}
+  .sub{color:var(--dim)}
+
+  /* Hero */
+  .hero{padding-top:48px}
+  .herogrid{display:grid; grid-template-columns:1.4fr .9fr; gap:34px; align-items:start}
+  .readout{background:var(--panel); border:1px solid var(--line2); padding:20px}
+  .readout .rh{font-family:var(--mono); font-size:11px; letter-spacing:.16em; color:var(--dim); text-transform:uppercase; display:flex; justify-content:space-between; border-bottom:1px solid var(--line); padding-bottom:10px; margin-bottom:14px}
+  .ring-wrap{display:flex; align-items:center; gap:16px; margin-bottom:16px}
+  .ring{width:84px; height:84px; flex:0 0 84px}
+  .ring circle{fill:none; stroke-width:8}
+  .ring .bg{stroke:var(--line)}
+  .ring .fg{stroke:var(--amber); stroke-linecap:round; transform:rotate(-90deg); transform-origin:50% 50%; transition:stroke-dashoffset .6s ease}
+  @media (prefers-reduced-motion:reduce){.ring .fg{transition:none}}
+  .ring-pct{font-family:var(--font-display); font-weight:700; font-size:22px}
+  .ring-label{font-family:var(--mono); font-size:10px; letter-spacing:.14em; color:var(--dim); text-transform:uppercase}
+  .modstat{list-style:none; margin:0; padding:0; font-family:var(--mono); font-size:12px}
+  .modstat li{display:flex; align-items:center; justify-content:space-between; padding:7px 0; border-top:1px solid var(--line); color:var(--dim)}
+  .modstat .bar{flex:1 1 auto; height:5px; background:var(--line); margin:0 10px; position:relative}
+  .modstat .bar i{position:absolute; inset:0 auto 0 0; background:var(--steel); width:0; transition:width .5s ease}
+  @media (prefers-reduced-motion:reduce){.modstat .bar i{transition:none}}
+  .modstat .v{color:var(--text); min-width:34px; text-align:right}
+
+  /* Cards / panels */
+  .panel{background:var(--panel); border:1px solid var(--line); padding:22px 24px; margin:16px 0}
+  .panel.amber{border-left:3px solid var(--amber)}
+  .panel.steel{border-left:3px solid var(--steel)}
+  .panel.alert{border-left:3px solid var(--red); background:linear-gradient(180deg,rgba(178,58,40,.05),transparent)}
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px}
+  .grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:16px}
+  .card{background:var(--panel); border:1px solid var(--line); padding:18px}
+  .card h3{margin-top:0}
+  .chip{display:inline-block; font-family:var(--mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase; padding:3px 8px; border:1px solid var(--line2); color:var(--dim); margin-bottom:10px}
+  .chip.a{color:var(--amber); border-color:var(--amber-dim)}
+  .chip.s{color:var(--steel); border-color:var(--steel-dim)}
+  .chip.g{color:var(--green); border-color:#9FC9AE}
+
+  /* Characteristics rubric */
+  .charrow{display:grid; grid-template-columns:170px 1fr; gap:0; border:1px solid var(--line)}
+  .charrow .k{background:var(--panel2); padding:13px 16px; font-family:var(--font-display); font-weight:600; text-transform:uppercase; letter-spacing:.04em; border-bottom:1px solid var(--line); border-right:1px solid var(--line); font-size:15px}
+  .charrow .v{padding:13px 16px; border-bottom:1px solid var(--line); color:var(--dim); font-size:14.5px}
+  .charrow:last-child .k,.charrow:last-child .v{border-bottom:none}
+
+  /* Lists */
+  ul.clean{list-style:none; padding:0; margin:0 0 14px}
+  ul.clean li{position:relative; padding:5px 0 5px 22px; color:var(--dim)}
+  ul.clean li::before{content:"\25B8"; position:absolute; left:0; top:5px; color:var(--amber); font-size:12px}
+  ol.q{padding-left:0; counter-reset:q; list-style:none; margin:0}
+  ol.q li{counter-increment:q; position:relative; padding:10px 0 10px 40px; border-top:1px solid var(--line); color:var(--text)}
+  ol.q li:first-child{border-top:none}
+  ol.q li::before{content:"Q"counter(q); position:absolute; left:0; top:11px; font-family:var(--mono); font-size:11px; color:var(--amber); letter-spacing:.05em}
+
+  /* Track checkboxes */
+  .track{display:flex; gap:12px; align-items:flex-start; padding:10px 0; border-top:1px solid var(--line); cursor:pointer}
+  .track:first-of-type{border-top:none}
+  .track input{position:absolute; opacity:0; width:0; height:0}
+  .box{flex:0 0 18px; width:18px; height:18px; border:1.5px solid var(--line2); margin-top:3px; display:grid; place-items:center; transition:.15s; color:#fff; background:var(--panel)}
+  .track:hover .box{border-color:var(--amber)}
+  .track input:focus-visible + .box{outline:2px solid var(--steel); outline-offset:2px}
+  .box svg{width:12px; height:12px; opacity:0; transform:scale(.5); transition:.15s}
+  .track input:checked + .box{background:var(--amber); border-color:var(--amber)}
+  .track input:checked + .box svg{opacity:1; transform:scale(1)}
+  .track .lab{font-size:14.5px; color:var(--text)}
+  .track .lab small{display:block; color:var(--faint); font-family:var(--mono); font-size:11px; letter-spacing:.04em; margin-top:2px}
+  .track input:checked ~ .lab{color:var(--dim)}
+
+  /* Agenda / data tables */
+  table.tbl{width:100%; border-collapse:collapse; margin:14px 0; font-size:13.5px}
+  table.tbl th,table.tbl td{border:1px solid var(--line); padding:9px 11px; text-align:left; vertical-align:top}
+  table.tbl th{background:var(--panel2); font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--dim); font-weight:600}
+  table.tbl td.t{font-family:var(--mono); color:var(--amber); white-space:nowrap; font-size:12.5px}
+  table.tbl tr td{color:var(--dim)}
+
+  /* Tool list */
+  .toolgrid{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+  .tool{background:var(--panel); border:1px solid var(--line); padding:15px 16px}
+  .tool .tn{font-family:var(--font-display); font-weight:600; text-transform:uppercase; letter-spacing:.03em; font-size:16px; display:flex; align-items:center; justify-content:space-between; gap:8px}
+  .tool .tn a{font-family:var(--mono); font-size:10px; letter-spacing:.1em; color:var(--steel)}
+  .tool .use{font-size:13.5px; color:var(--text); margin:6px 0 8px}
+  .tool .cav{font-size:12.5px; color:var(--faint); font-style:italic; border-top:1px dashed var(--line2); padding-top:7px}
+  .tool .cav b{color:var(--red); font-style:normal; font-family:var(--mono); font-size:10px; letter-spacing:.1em}
+
+  /* Code block + copy */
+  .code{position:relative; background:var(--panel2); border:1px solid var(--line2); border-left:3px solid var(--steel); margin:12px 0}
+  .code pre{margin:0; padding:18px; overflow-x:auto; font-family:var(--mono); font-size:12.5px; line-height:1.7; color:#2C3A47}
+  .copy{position:absolute; top:9px; right:9px; background:var(--panel); border:1px solid var(--line2); color:var(--dim); font-family:var(--mono); font-size:10px; letter-spacing:.1em; padding:5px 9px; cursor:pointer; text-transform:uppercase}
+  .copy:hover{color:var(--amber); border-color:var(--amber-dim)}
+
+  .note{font-family:var(--mono); font-size:11.5px; color:var(--faint); letter-spacing:.03em; margin-top:8px}
+  .divider{height:1px; background:var(--line); margin:40px 0 0}
+  .out{font-family:var(--mono); font-size:12px; color:var(--green); letter-spacing:.04em; margin-top:14px; padding:10px 14px; border:1px solid #9FC9AE; background:rgba(46,128,73,.07)}
+  .out b{color:var(--green)}
+
+  @media (max-width:960px){
+    .topbar{display:flex}
+    nav.side{position:fixed; top:0; left:0; z-index:50; transform:translateX(-100%); transition:transform .25s ease}
+    nav.side.open{transform:translateX(0); box-shadow:0 0 0 100vmax rgba(15,22,30,.4)}
+    @media (prefers-reduced-motion:reduce){nav.side{transition:none}}
+    .herogrid{grid-template-columns:1fr}
+    .grid2,.grid3,.toolgrid{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+<div class="classbar top">Unclassified // For Training Use Only</div>
+
+<div class="topbar">
+  <span class="nm">North Watch OPD</span>
+  <button class="menubtn" id="menubtn" aria-label="Toggle navigation">MENU</button>
+</div>
+
+<div class="shell">
+  <nav class="side" id="side" aria-label="Section navigation">
+    <div class="brand">
+      <div class="tag">Intelligence OPD // USAREUR-AF</div>
+      <div class="nm">From Signal<br>to System</div>
+    </div>
+    <ul class="navlist" id="navlist">
+      <li><a href="#overview"><span class="ix">00</span>Overview</a></li>
+      <li><a href="#casestudy"><span class="ix">CS</span>Case Study</a></li>
+      <li><a href="#m1"><span class="ix">01</span>The Analyst &amp; the Flood</a></li>
+      <li><a href="#m2"><span class="ix">02</span>Augmenting the Analyst</a></li>
+      <li><a href="#m3"><span class="ix">03</span>Building the Machine</a></li>
+      <li><a href="#capstone"><span class="ix">CP</span>Capstone</a></li>
+      <li><a href="#tools"><span class="ix">TL</span>Tools</a></li>
+      <li><a href="#guardrails"><span class="ix">!!</span>Guardrails</a></li>
+      <li><a href="#templates"><span class="ix">TP</span>Templates</a></li>
+    </ul>
+    <div class="navfoot">
+      Progress is saved on this device.<br>Hosted build persists; in-app preview does not.
+      <button class="reset" id="reset">Reset progress</button>
+    </div>
+  </nav>
+
+  <main>
+    <!-- HERO / OVERVIEW -->
+    <section id="overview" class="hero">
+      <div class="eyebrow">Three Sessions &middot; Case-Study Based</div>
+      <div class="herogrid">
+        <div>
+          <h1>From Signal<br>to System</h1>
+          <p class="lead">Fusing traditional analysis, data-driven methods, and artificial intelligence for the intelligence warfighting function.</p>
+          <p class="sub">OSINT is the vehicle, not the subject. The subject is sound tradecraft, measured against the Army standard for effective intelligence, and the disciplined integration of data and AI into that tradecraft. One scenario, <strong>Exercise NORTH WATCH</strong>, runs through all three sessions and builds toward a working tool you host yourself.</p>
+        </div>
+        <aside class="readout" aria-label="Mission readiness">
+          <div class="rh"><span>Mission Readiness</span><span id="stamp">M-00</span></div>
+          <div class="ring-wrap">
+            <svg class="ring" viewBox="0 0 100 100" aria-hidden="true">
+              <circle class="bg" cx="50" cy="50" r="42"></circle>
+              <circle class="fg" id="ring" cx="50" cy="50" r="42"></circle>
+            </svg>
+            <div>
+              <div class="ring-pct"><span id="pct">0</span>%</div>
+              <div class="ring-label">Tasks complete</div>
+            </div>
+          </div>
+          <ul class="modstat" id="modstat">
+            <li data-m="1"><span>M01</span><span class="bar"><i></i></span><span class="v">0%</span></li>
+            <li data-m="2"><span>M02</span><span class="bar"><i></i></span><span class="v">0%</span></li>
+            <li data-m="3"><span>M03</span><span class="bar"><i></i></span><span class="v">0%</span></li>
+          </ul>
+        </aside>
+      </div>
+
+      <h3>Overarching goals</h3>
+      <p class="sub">By the end of the OPD you will be able to:</p>
+      <ul class="clean">
+        <li>Frame an intelligence problem into requirements, indicators, and a collection focus, and defend that framing against the characteristics of effective intelligence.</li>
+        <li>Collect, evaluate, and structure live open-source data (news, flight, maritime, conflict-event, and GNSS-interference streams) while managing overload and rating source reliability.</li>
+        <li>Apply structured analytic techniques to separate fact from assumption, test hypotheses, and express calibrated confidence.</li>
+        <li>Integrate free AI tools (search, summarization, entity extraction, translation, drafting) as augmentation, then verify and red-team their outputs.</li>
+        <li>Design, build, document, and host a working analyst-support or AI tool on GitHub with proper OPSEC, oversight, and data-rights safeguards.</li>
+        <li>Produce and brief a fused product that meets every characteristic and states where AI was used and how it was checked.</li>
+      </ul>
+
+      <h3>The standard: characteristics of effective intelligence</h3>
+      <p class="sub">Every discussion, exercise, and product is graded against this rubric. AI and data tools change how fast and how completely you meet it; they do not change the standard, and several of these are exactly where naive AI use fails.</p>
+      <div style="margin-top:12px">
+        <div class="charrow"><div class="k">Timely</div><div class="v">Provided early enough to support a decision and prevent surprise; flows continuously before, during, and after operations.</div></div>
+        <div class="charrow"><div class="k">Relevant &amp; tailored</div><div class="v">Answers the commander's requirements; delivered in the requested format; clear, concise, usable for a decision.</div></div>
+        <div class="charrow"><div class="k">Accurate &amp; reliable</div><div class="v">Multiple sources and disciplines; fact separated from assumption; alternative assessments when needed; source reliability and confidence stated up front.</div></div>
+        <div class="charrow"><div class="k">Predictive</div><div class="v">Addresses what the threat can do (most dangerous COA) and is most likely to do (most likely COA); anticipates needs across longer time windows.</div></div>
+        <div class="charrow"><div class="k">Enterprise standard</div><div class="v">Usable (correct format for databasing and display), complete (all necessary components), and precise (the right level of detail to answer the requirement).</div></div>
+      </div>
+    </section>
+
+    <!-- CASE STUDY -->
+    <section id="casestudy">
+      <div class="eyebrow">The Running Scenario</div>
+      <h2>Exercise North Watch</h2>
+      <p class="lead">Indications &amp; warning on grey-zone threats to critical undersea infrastructure in the Baltic Sea.</p>
+      <p>Your cell supports a multinational task force responsible for I&amp;W on threats to undersea cables and pipelines. The commander's guidance: <em>"I do not want to be surprised by the next cable incident. Tell me what to watch and what would tell us something is about to happen."</em></p>
+
+      <div class="panel steel">
+        <h4>Why this is real</h4>
+        <p class="sub" style="margin-bottom:0">After repeated cable and pipeline incidents, NATO launched the <strong>Baltic Sentry</strong> vigilance activity in January 2025 to protect critical undersea infrastructure. In parallel, an allied monitoring system applies AI to vessel data, including the AIS positions ships broadcast, to score the risk posed by each vessel entering an area of interest. That production system is, in effect, the full-scale version of the tool you will build in miniature by Session 3. Several real incidents in this problem set were variously judged deliberate, ruled accidental, or left unattributable. <strong>That ambiguity is the point</strong>, and it is where bias, overattribution, and the line between fact and assumption show up. Source: <a href="https://shape.nato.int/operations/operations-and-missions/baltic-sentry" target="_blank" rel="noopener">NATO SHAPE &middot; Baltic Sentry</a>.</p>
+      </div>
+
+      <h3>The streams you will fuse</h3>
+      <div class="grid2">
+        <div class="card"><span class="chip s">Maritime / AIS</span><p class="sub" style="margin:0">Shadow-fleet vessels loitering near cable corridors, going dark, or behaving anomalously.</p></div>
+        <div class="card"><span class="chip s">Air / ADS-B</span><p class="sub" style="margin:0">Patrol and anomalous air activity, and the reality that military aircraft often do not broadcast, which teaches the limits of any one feed.</p></div>
+        <div class="card"><span class="chip a">GNSS interference</span><p class="sub" style="margin:0">GPS jamming and spoofing in the region, observable through public interference maps.</p></div>
+        <div class="card"><span class="chip g">Events / reporting</span><p class="sub" style="margin:0">News streams and conflict-event data covering incidents, enforcement actions, and airspace violations.</p></div>
+      </div>
+
+      <h3>The building arc</h3>
+      <table class="tbl">
+        <tr><th>Module</th><th>You produce</th></tr>
+        <tr><td class="t">01</td><td>A framed I&amp;W problem (requirements, indicators), a manually built observation log for a set window, and a baseline assessment using one structured technique. You feel the overload directly.</td></tr>
+        <tr><td class="t">02</td><td>The same data, now structured and analyzed with data methods and AI (search, summarize, extract, translate), an ACH on one incident, and a human-versus-AI product comparison with calibrated confidence.</td></tr>
+        <tr><td class="t">03</td><td>A working "mini watch" tool hosted on GitHub that automates part of the workflow, a final fused I&amp;W product, and a capstone brief, all measured against the characteristics.</td></tr>
+      </table>
+    </section>
+
+    <!-- MODULE 1 -->
+    <section id="m1" data-module="1">
+      <div class="eyebrow">Module 01</div>
+      <h2>The Analyst &amp; the Flood</h2>
+      <p class="lead sub">Traditional tradecraft, cognition, and the data-overload problem.</p>
+      <p>Before automation, judgment. This module makes the analyst's mind the first instrument, frames the NORTH WATCH problem, and has you collect manually from live feeds so you personally feel the overload the rest of the program is built to solve.</p>
+
+      <h4>Learning outcomes</h4>
+      <ul class="clean">
+        <li>Convert a commander's problem into PIRs, SIRs, and observable indicators.</li>
+        <li>Identify three biases that degrade analysis and a mitigation for each.</li>
+        <li>Collect from three live streams and rate each source's reliability.</li>
+        <li>Explain why "more collection" can degrade decision quality.</li>
+        <li>Produce a baseline assessment that separates fact from assumption and assigns confidence.</li>
+      </ul>
+
+      <h4>Required reading</h4>
+      <label class="track"><input type="checkbox" class="track-check" data-id="m1r1"><span class="box"><svg viewBox="0 0 12 12"><path d="M1 6l3.5 3.5L11 2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lab">Heuer, <em>Psychology of Intelligence Analysis</em> &mdash; intro plus the chapters on perception, memory, and biases in evaluating evidence and cause/effect.<small>Free PDF widely available &middot; CIA Center for the Study of Intelligence</small></span></label>
+      <label class="track"><input type="checkbox" class="track-check" data-id="m1r2"><span class="box"><svg viewBox="0 0 12 12"><path d="M1 6l3.5 3.5L11 2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lab"><a href="https://smallwarsjournal.com/2026/04/21/drowning-in-data-solving-the-data-overload-problem-in-osint/" target="_blank" rel="noopener">"Drowning in Data: Solving the Data Overload Problem in OSINT"</a> (Small Wars Journal, 2026) &mdash; read in full.<small>The problem statement for the whole program</small></span></label>
+      <label class="track"><input type="checkbox" class="track-check" data-id="m1r3"><span class="box"><svg viewBox="0 0 12 12"><path d="M1 6l3.5 3.5L11 2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lab">Supplemental: <a href="https://www.nationalacademies.org/publications/13062" target="_blank" rel="noopener"><em>Intelligence Analysis: Behavioral and Social Scientific Foundations</em></a> (National Academies, 2011) &mdash; summary and analytic-methods chapter.<small>Grounds discussion in evidence, not anecdote</small></span></label>
+
+      <h4>Discussion</h4>
+      <ol class="q">
+        <li>Heuer argues analysts see what they expect to see. Where in NORTH WATCH are you most at risk of "knowing" the answer before the evidence supports it, and how would you guard against it?</li>
+        <li>"Drowning in Data" calls overload a flaw in institutional design more than a technical problem. Do you agree? What in your formation's design makes overload worse?</li>
+        <li>The article names hallucination, automation bias, and adversarial manipulation as new AI risks. Which worries you most for an OSINT cell, and why?</li>
+        <li>The event cycle moves in hours and minutes; doctrine often moves in days and weeks. What breaks first when your analytic cycle is slower than the event cycle?</li>
+        <li>Map each characteristic of effective intelligence to NORTH WATCH. Which is hardest with open sources alone?</li>
+        <li>When is collecting <em>less</em> the right call, and how would you justify that to a commander who equates more reporting with more security?</li>
+      </ol>
+
+      <h4>Practical exercise &middot; Phase 1: Frame and collect</h4>
+      <label class="track"><input type="checkbox" class="track-check" data-id="m1p1"><span class="box"><svg viewBox="0 0 12 12"><path d="M1 6l3.5 3.5L11 2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lab"><strong>Frame.</strong> Write one PIR, three to five SIRs, and an indicator list for each SIR. Mark which indicators you can actually observe in open sources and which you cannot.</span></label>
+      <label class="track"><input type="checkbox" class="track-check" data-id="m1p2"><span class="box"><svg viewBox="0 0 12 12"><path d="M1 6l3.5 3.5L11 2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lab"><strong>Collect.</strong> Define an area of interest and a time window. Log every relevant observation from at least three live streams (maritime, air, GNSS, events/news). Rate each source A&ndash;F and each item 1&ndash;6.</span></label>
+      <label class="track"><input type="checkbox" class="track-check" data-id="m1p3"><span class="box"><svg viewBox="0 0 12 12"><path d="M1 6l3.5 3.5L11 2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lab"><strong>Assess.</strong> Write a three-sentence baseline: what you can say, what you are assuming, your confidence. Label fact versus assumption explicitly.</span></label>
+      <div class="out"><b>Hand-off &rsaquo;</b> Keep the framed problem, the collection log, and the baseline. Module 02 structures and analyzes them.</div>
+
+      <h4>Check on learning</h4>
+      <p class="sub">Define PIR/SIR/indicator. Name three biases and a mitigation for each. State the reliability scale. Then grade your baseline against the rubric &mdash; the bar this module is <strong>accurate &amp; reliable</strong> and <strong>complete</strong>: did you separate fact from assumption, rate sources, and avoid overattribution?</p>
+    </section>
+
+    <!-- MODULE 2 -->
+    <section id="m2" data-module="2">
+      <div class="eyebrow">Module 02</div>
+      <h2>Augmenting the Analyst</h2>
+      <p class="lead sub">Data-driven methods, structured analytic techniques, and AI as a teammate.</p>
+      <p>Now discipline the flood. Take the messy data from Module 01 and apply data structuring, structured analytic techniques, and free AI tools as augmentation, then verify and red-team everything the AI produces.</p>
+
+      <h4>Learning outcomes</h4>
+      <ul class="clean">
+        <li>Structure unstructured reporting into a consistent schema (who, what, where, when, source, reliability).</li>
+        <li>Use AI for search, summarization, and entity extraction, and state the limitation of each.</li>
+        <li>Run an Analysis of Competing Hypotheses on one incident, using AI as devil's advocate without surrendering judgment.</li>
+        <li>Verify AI outputs against sources, detect hallucination, and assign calibrated confidence.</li>
+        <li>Compare a human-only product to an AI-augmented one against the characteristics.</li>
+      </ul>
+
+      <h4>Required reading</h4>
+      <label class="track"><input type="checkbox" class="track-check" data-id="m2r1"><span class="box"><svg viewBox="0 0 12 12"><path d="M1 6l3.5 3.5L11 2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lab"><a href="https://www.frontiersin.org/journals/human-dynamics/articles/10.3389/fhumd.2025.1540450/full" target="_blank" rel="noopener">Nitzl et al., "The Use of Artificial Intelligence in Military Intelligence"</a> (Frontiers, 2025) &mdash; read in full.<small>The empirical backbone: 30 participants, AI vs control, three functions tested</small></span></label>
+      <label class="track"><input type="checkbox" class="track-check" data-id="m2r2"><span class="box"><svg viewBox="0 0 12 12"><path d="M1 6l3.5 3.5L11 2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lab"><a href="https://www.sciencedirect.com/science/article/pii/S187705091502983X" target="_blank" rel="noopener">"Extracting Meaningful Entities from Human-Generated Tactical Reports"</a> &mdash; the entity-extraction concept you apply by hand and with AI.<small>Note the warning: incorrect tagging is a real failure mode</small></span></label>
+      <label class="track"><input type="checkbox" class="track-check" data-id="m2r3"><span class="box"><svg viewBox="0 0 12 12"><path d="M1 6l3.5 3.5L11 2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lab">Supplemental: <a href="https://link.springer.com/article/10.1007/s42979-021-00765-8" target="_blank" rel="noopener">"Data Science and Analytics: An Overview"</a> (Springer) for shared vocabulary, plus the front half of Brown, "Developing Readiness to Trust AI within Warfighting Teams."<small>Sets up the trust discussion this module makes measurable</small></span></label>
+
+      <h4>Discussion</h4>
+      <ol class="q">
+        <li>The AI-supported group produced clearly better assessments under time pressure and probability estimates closer to experts, yet reported <em>no</em> higher confidence in their sources or analysis. Why might better results not raise confidence, and is that a feature or a bug for a professional?</li>
+        <li>Of the three functions (search, summarization, entity recognition), which is most dangerous to trust blindly in NORTH WATCH, and what does its failure look like?</li>
+        <li>The authors flag data protection and confidentiality as central. What is the bright line you will never cross with a public AI tool? (Anchor to Guardrails.)</li>
+        <li>Brown frames trust in AI as something to be <em>developed</em>. What would have to be true about a tool before you let its output into a decision product?</li>
+        <li>Where does ACH protect you from the biases Heuer described? Where could AI quietly reintroduce them?</li>
+        <li>Re-grade your Module 01 product now that it is structured. Which characteristic improved most from structuring alone, before any AI?</li>
+      </ol>
+
+      <h4>Practical exercise &middot; Phase 2: Structure, augment, verify</h4>
+      <label class="track"><input type="checkbox" class="track-check" data-id="m2p1"><span class="box"><svg viewBox="0 0 12 12"><path d="M1 6l3.5 3.5L11 2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lab"><strong>Structure.</strong> Convert the Module 01 log into one consistent table (who/what/where/when/source/reliability/link). Reuse this schema for your tool in Module 03.</span></label>
+      <label class="track"><input type="checkbox" class="track-check" data-id="m2p2"><span class="box"><svg viewBox="0 0 12 12"><path d="M1 6l3.5 3.5L11 2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lab"><strong>Augment (three functions).</strong> Use AI to triage/cluster reporting, summarize a set of reports (then verify every claim: confirmed / unsupported / hallucinated), and extract entities into your table (audit a sample for tagging errors).</span></label>
+      <label class="track"><input type="checkbox" class="track-check" data-id="m2p3"><span class="box"><svg viewBox="0 0 12 12"><path d="M1 6l3.5 3.5L11 2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lab"><strong>Analyze (ACH).</strong> Pick one incident; state three competing hypotheses (sabotage / accidental anchor drag / innocent transit); build an ACH matrix on disconfirming evidence; have the AI argue your least-likely hypothesis and note whether it moved you.</span></label>
+      <label class="track"><input type="checkbox" class="track-check" data-id="m2p4"><span class="box"><svg viewBox="0 0 12 12"><path d="M1 6l3.5 3.5L11 2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lab"><strong>Compare and calibrate.</strong> Produce two short assessments of the same incident, human-only and AI-augmented, each with stated confidence and the source reliability behind it.</span></label>
+      <div class="out"><b>Hand-off &rsaquo;</b> Keep the structured table, the verified entity set, the ACH matrix, and the comparison. This is the engine your Module 03 tool will automate.</div>
+
+      <h4>Check on learning</h4>
+      <p class="sub">Name the three AI functions and a limitation of each. State the five ACH steps. Define hallucination and automation bias with a NORTH WATCH example of each. Did you catch at least one AI error? The augmented product should be more <strong>timely</strong> and <strong>complete</strong> without losing <strong>accurate &amp; reliable</strong>.</p>
+    </section>
+
+    <!-- MODULE 3 -->
+    <section id="m3" data-module="3">
+      <div class="eyebrow">Module 03</div>
+      <h2>Building the Machine</h2>
+      <p class="lead sub">Automation, computerized support tools, and the GitHub capstone.</p>
+      <p>Turn the repeatable parts of the workflow into a tool you own. Build and host a working analyst-support or AI tool on GitHub, then produce and brief a final fused I&amp;W product. This is where the OPD becomes a capability you keep.</p>
+
+      <h4>Learning outcomes</h4>
+      <ul class="clean">
+        <li>Decide which steps to automate and which must stay human, and justify the line.</li>
+        <li>Build a working tool at your chosen track that automates collection, structuring, or summarization.</li>
+        <li>Host it on GitHub with a clear README and an OPSEC/data-rights statement another analyst could follow.</li>
+        <li>Produce a final fused I&amp;W product covering most likely and most dangerous COAs.</li>
+        <li>Brief the tool and product, stating where AI was used, how it was verified, and what the tool cannot do.</li>
+      </ul>
+
+      <h4>Required reading</h4>
+      <label class="track"><input type="checkbox" class="track-check" data-id="m3r1"><span class="box"><svg viewBox="0 0 12 12"><path d="M1 6l3.5 3.5L11 2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lab"><a href="https://www.academia.edu/33183787/Development_of_computerized_support_tools_for_intelligence_work" target="_blank" rel="noopener">"Development of Computerized Support Tools for Intelligence Work"</a> &mdash; design principles for analyst-support tools.<small>The design reference for your capstone</small></span></label>
+      <label class="track"><input type="checkbox" class="track-check" data-id="m3r2"><span class="box"><svg viewBox="0 0 12 12"><path d="M1 6l3.5 3.5L11 2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lab"><a href="https://hdsr.mitpress.mit.edu/pub/fdzqkh85/release/1" target="_blank" rel="noopener">"AI Agents Are Transforming Decision Making: What Leaders Should Know"</a> (MIT / HDSR).<small>The governance lens: what to automate, what to keep on a human</small></span></label>
+
+      <h4>Discussion</h4>
+      <ol class="q">
+        <li>The support-tools reading is about aiding, not replacing, analysts. Where did you keep a human in the decision, and why there?</li>
+        <li>What is the most useful action you would let an agent take unattended in NORTH WATCH, and the first action you would never automate?</li>
+        <li>Your tool will eventually be wrong. What is its failure mode, who notices, and how fast? If you cannot answer, it is not ready for a real product.</li>
+        <li>Re-read Brown after building. Would you trust your own tool in a product for a commander? What single change moves it from demo to trusted teammate?</li>
+        <li>Which characteristic does your tool most improve (usually timely or complete), and which does it most endanger (usually accurate &amp; reliable)? How does the design protect the one at risk?</li>
+      </ol>
+
+      <h4>Practical exercise &middot; Phase 3: Ship it</h4>
+      <label class="track"><input type="checkbox" class="track-check" data-id="m3p1"><span class="box"><svg viewBox="0 0 12 12"><path d="M1 6l3.5 3.5L11 2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lab"><strong>Scope honestly.</strong> One sentence on what the tool does and what it does not do. Pick the smallest version that adds real value.</span></label>
+      <label class="track"><input type="checkbox" class="track-check" data-id="m3p2"><span class="box"><svg viewBox="0 0 12 12"><path d="M1 6l3.5 3.5L11 2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lab"><strong>Finish and host.</strong> Push to a GitHub repo with the working tool, a README, and an OPSEC/data-rights statement. Confirm a teammate can open it and understand it.</span></label>
+      <label class="track"><input type="checkbox" class="track-check" data-id="m3p3"><span class="box"><svg viewBox="0 0 12 12"><path d="M1 6l3.5 3.5L11 2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lab"><strong>Produce the product.</strong> Use the tool plus judgment to write the final fused I&amp;W product (BLUF, most likely COA, most dangerous COA, assumptions, gaps, reliability, AI-use statement).</span></label>
+      <label class="track"><input type="checkbox" class="track-check" data-id="m3p4"><span class="box"><svg viewBox="0 0 12 12"><path d="M1 6l3.5 3.5L11 2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lab"><strong>Brief it.</strong> Five minutes: the tool and the product, stating where AI was used, how outputs were verified, and what the tool cannot do.</span></label>
+      <div class="out"><b>Capstone standard &rsaquo;</b> The repo is live and legible to another analyst; the README and OPSEC/data-rights statement are present and correct; the final product meets every characteristic, including a clear AI-use-and-verification line.</div>
+    </section>
+
+    <!-- CAPSTONE -->
+    <section id="capstone">
+      <div class="eyebrow">The Capstone</div>
+      <h2>Three Build Tracks</h2>
+      <p class="sub">Every cell hosts a tool on GitHub. Choose a track by skill and ambition. The grade is on analytic value and documentation, not code volume. No cell finishes without a live repo, but the bar scales to the cell.</p>
+      <div class="grid3">
+        <div class="card">
+          <span class="chip s">Track 1 &middot; No code</span>
+          <h3>Link &amp; feed board</h3>
+          <p class="sub">A single static page on GitHub Pages that becomes the cell's watch board: curated labeled links, embedded public maps where permitted, a methodology note, and a log section.</p>
+          <p class="note">Adds value: standardizes where you look and how you record (usable, complete). Version-controlled and sharable.</p>
+        </div>
+        <div class="card">
+          <span class="chip s">Track 2 &middot; Light code</span>
+          <h3>Notebook pipeline</h3>
+          <p class="sub">A Colab or Jupyter notebook in a repo that pulls a free API (GDELT, OpenSky), filters to the area of interest, structures results into your schema, and optionally drafts a sourced summary a human verifies.</p>
+          <p class="note">Adds value: automates collection and structuring (timely, usable) while a human owns the summary.</p>
+        </div>
+        <div class="card">
+          <span class="chip s">Track 3 &middot; More code</span>
+          <h3>Hosted app / mini-agent</h3>
+          <p class="sub">A small Streamlit app on Streamlit Community Cloud, or a light pipeline, that ingests a feed, structures it, flags a transparent anomaly (e.g. loitering in a cable corridor), and presents a verifiable draft brief.</p>
+          <p class="note">Adds value: end-to-end augmentation and the governance question of what the agent may and may not do unattended.</p>
+        </div>
+      </div>
+      <div class="panel alert" style="margin-top:18px">
+        <h4 style="color:var(--red)">Hard rule for every track</h4>
+        <p class="sub" style="margin-bottom:0">Respect each source's terms of use. Do not re-serve another provider's raw licensed data, attribute every source, and keep everything unclassified and non-CUI. Prefer fully open feeds (e.g. GDELT) for anything public.</p>
+      </div>
+    </section>
+
+    <!-- TOOLS -->
+    <section id="tools">
+      <div class="eyebrow">Annotated Bibliography</div>
+      <h2>Tools</h2>
+      <p class="sub">What it is, why we use it, and the limit that makes it tradecraft. Teaching the limit of a source is part of the job.</p>
+
+      <h3>Maritime tracking (AIS)</h3>
+      <div class="toolgrid">
+        <div class="tool"><div class="tn">MarineTraffic <a href="https://www.marinetraffic.com" target="_blank" rel="noopener">OPEN &rsaquo;</a></div><div class="use">Vessel positions, identity, and history; spot loitering, dark periods, anomalous routing near cable corridors.</div><div class="cav"><b>Limit</b> Free view is delayed; AIS can be switched off or spoofed. Absence of a track is itself a signal.</div></div>
+        <div class="tool"><div class="tn">VesselFinder <a href="https://www.vesselfinder.com" target="_blank" rel="noopener">OPEN &rsaquo;</a></div><div class="use">Alternative AIS web map for cross-checking identity and route.</div><div class="cav"><b>Limit</b> Coverage gaps in open water; history behind paywall.</div></div>
+        <div class="tool"><div class="tn">AISStream.io <a href="https://aisstream.io" target="_blank" rel="noopener">OPEN &rsaquo;</a></div><div class="use">Free streaming AIS websocket for the notebook/app tracks.</div><div class="cav"><b>Limit</b> Coverage depends on volunteer receivers.</div></div>
+        <div class="tool"><div class="tn">AISHub <a href="https://www.aishub.net" target="_blank" rel="noopener">OPEN &rsaquo;</a></div><div class="use">Community AIS data exchange; data access for contributors.</div><div class="cav"><b>Limit</b> Access tied to contributing a feed.</div></div>
+      </div>
+
+      <h3>Flight tracking (ADS-B)</h3>
+      <div class="toolgrid">
+        <div class="tool"><div class="tn">OpenSky Network <a href="https://opensky-network.org" target="_blank" rel="noopener">OPEN &rsaquo;</a></div><div class="use">Research-friendly flight data with a free API; the recommended feed for the notebook track.</div><div class="cav"><b>Limit</b> Free tier is rate-limited with history caps; non-commercial use.</div></div>
+        <div class="tool"><div class="tn">ADS-B Exchange <a href="https://globe.adsbexchange.com" target="_blank" rel="noopener">OPEN &rsaquo;</a></div><div class="use">Less-filtered community tracker; observe air activity and learn what is not visible.</div><div class="cav"><b>Limit</b> Military aircraft frequently do not broadcast. Treat ADS-B as partial.</div></div>
+        <div class="tool"><div class="tn">adsb.lol / adsb.fi <a href="https://adsb.lol" target="_blank" rel="noopener">OPEN &rsaquo;</a></div><div class="use">Open community trackers with permissive data access.</div><div class="cav"><b>Limit</b> Same broadcast gap; coverage varies by receiver density.</div></div>
+        <div class="tool"><div class="tn">Flightradar24 <a href="https://www.flightradar24.com" target="_blank" rel="noopener">OPEN &rsaquo;</a></div><div class="use">Polished tracker for quick visual confirmation.</div><div class="cav"><b>Limit</b> Free tier limits history; no general free API.</div></div>
+      </div>
+
+      <h3>GNSS interference</h3>
+      <div class="toolgrid">
+        <div class="tool"><div class="tn">GPSJam <a href="https://gpsjam.org" target="_blank" rel="noopener">OPEN &rsaquo;</a></div><div class="use">Daily map of GPS interference inferred from aircraft navigation-integrity data; a grey-zone indicator over the Baltic.</div><div class="cav"><b>Limit</b> Inferred from aircraft data; an indicator, not ground truth.</div></div>
+      </div>
+
+      <h3>Conflict &amp; event data</h3>
+      <div class="toolgrid">
+        <div class="tool"><div class="tn">ACLED <a href="https://acleddata.com" target="_blank" rel="noopener">OPEN &rsaquo;</a></div><div class="use">Curated political-violence and event data, dashboards, and an API; covers the Baltic incidents directly.</div><div class="cav"><b>Limit</b> Free with registration (myACLED for dashboards/aggregates); higher tiers may cost. License forbids re-serving raw data or building a substitute dashboard. Never commit raw ACLED data to a public repo.</div></div>
+        <div class="tool"><div class="tn">GDELT Project <a href="https://www.gdeltproject.org" target="_blank" rel="noopener">OPEN &rsaquo;</a></div><div class="use">Massive, fully open global event and news database with API and BigQuery; the recommended free feed for public tools.</div><div class="cav"><b>Limit</b> Noisy and machine-coded; requires filtering and verification.</div></div>
+        <div class="tool"><div class="tn">LiveUAMap <a href="https://liveuamap.com" target="_blank" rel="noopener">OPEN &rsaquo;</a></div><div class="use">Crowd/curated conflict map for fast situational picture and lead generation.</div><div class="cav"><b>Limit</b> Aggregated and uneven; verify before use.</div></div>
+      </div>
+
+      <h3>Investigation toolkits &amp; utilities</h3>
+      <div class="toolgrid">
+        <div class="tool"><div class="tn">Bellingcat Toolkit <a href="https://bellingcat.gitbook.io/toolkit" target="_blank" rel="noopener">OPEN &rsaquo;</a></div><div class="use">Maintained directory of free OSINT tools across maps, imagery, social, and verification.</div><div class="cav"><b>Limit</b> Tools come and go; check status before relying on one.</div></div>
+        <div class="tool"><div class="tn">Copernicus / EO Browser <a href="https://browser.dataspace.copernicus.eu" target="_blank" rel="noopener">OPEN &rsaquo;</a></div><div class="use">Free satellite imagery exploration for visual context of an area of interest.</div><div class="cav"><b>Limit</b> Revisit and resolution limits; clouds obscure.</div></div>
+        <div class="tool"><div class="tn">OSM / Overpass Turbo <a href="https://overpass-turbo.eu" target="_blank" rel="noopener">OPEN &rsaquo;</a></div><div class="use">Geospatial context and feature queries; plot incidents and reference points.</div><div class="cav"><b>Limit</b> Completeness varies by region.</div></div>
+        <div class="tool"><div class="tn">Wayback / archive.today <a href="https://web.archive.org" target="_blank" rel="noopener">OPEN &rsaquo;</a></div><div class="use">Capture and cite sources that may change or disappear; date-stamp claims.</div><div class="cav"><b>Limit</b> Not everything is archived; archive proactively.</div></div>
+      </div>
+
+      <h3>Free AI tools</h3>
+      <div class="toolgrid">
+        <div class="tool"><div class="tn">AI chat (Claude / ChatGPT / Gemini) <a href="https://claude.ai" target="_blank" rel="noopener">OPEN &rsaquo;</a></div><div class="use">Triage, drafting, reframing, devil's advocate.</div><div class="cav"><b>Limit</b> Never input classified or CUI. Verify every factual claim; they hallucinate confidently.</div></div>
+        <div class="tool"><div class="tn">NotebookLM <a href="https://notebooklm.google.com" target="_blank" rel="noopener">OPEN &rsaquo;</a></div><div class="use">Document-grounded AI that answers only from sources you provide and cites back; summarize your own collected reports with traceable sourcing.</div><div class="cav"><b>Limit</b> Grounding reduces but does not remove error; still verify.</div></div>
+        <div class="tool"><div class="tn">Perplexity <a href="https://www.perplexity.ai" target="_blank" rel="noopener">OPEN &rsaquo;</a></div><div class="use">AI search with live citations for fast sourced lead generation.</div><div class="cav"><b>Limit</b> Citations can be thin or off-topic; open the source.</div></div>
+        <div class="tool"><div class="tn">DeepL / Google Translate <a href="https://www.deepl.com/translator" target="_blank" rel="noopener">OPEN &rsaquo;</a></div><div class="use">Native-language Baltic-region reporting.</div><div class="cav"><b>Limit</b> Nuance and named entities can be mistranslated; flag uncertain renderings.</div></div>
+        <div class="tool"><div class="tn">Hugging Face <a href="https://huggingface.co" target="_blank" rel="noopener">OPEN &rsaquo;</a></div><div class="use">Task-specific open models (e.g. NER) for the app track.</div><div class="cav"><b>Limit</b> Quality and licensing vary; read the model card.</div></div>
+        <div class="tool"><div class="tn">Ollama / LM Studio <a href="https://ollama.com" target="_blank" rel="noopener">OPEN &rsaquo;</a></div><div class="use">Run a model on your own hardware to keep data off third-party servers; relevant to the confidentiality concern in the research.</div><div class="cav"><b>Limit</b> Smaller local models are weaker; hardware-limited; still not for classified data.</div></div>
+      </div>
+
+      <h3>Build &amp; host</h3>
+      <div class="toolgrid">
+        <div class="tool"><div class="tn">GitHub + Pages <a href="https://pages.github.com" target="_blank" rel="noopener">OPEN &rsaquo;</a></div><div class="use">Version control and free static hosting; the capstone home for all tracks.</div><div class="cav"><b>Limit</b> Public repos are public. Never commit keys, raw licensed data, or sensitive content.</div></div>
+        <div class="tool"><div class="tn">Google Colab <a href="https://colab.research.google.com" target="_blank" rel="noopener">OPEN &rsaquo;</a></div><div class="use">Free browser notebooks with no local setup; the notebook track.</div><div class="cav"><b>Limit</b> Sessions reset; store code in the repo.</div></div>
+        <div class="tool"><div class="tn">Streamlit Community Cloud <a href="https://streamlit.io/cloud" target="_blank" rel="noopener">OPEN &rsaquo;</a></div><div class="use">Free hosting for small Python apps from a GitHub repo; the app track.</div><div class="cav"><b>Limit</b> Resource limits; public by default unless configured.</div></div>
+        <div class="tool"><div class="tn">Netlify <a href="https://www.netlify.com" target="_blank" rel="noopener">OPEN &rsaquo;</a></div><div class="use">Free static hosting with custom domains and easy deploys; an alternative to Pages for Track 1.</div><div class="cav"><b>Limit</b> Same public-content cautions.</div></div>
+      </div>
+    </section>
+
+    <!-- GUARDRAILS -->
+    <section id="guardrails">
+      <div class="eyebrow">Mandatory</div>
+      <h2>Guardrails</h2>
+      <p class="sub">Brief this before any collection and reinforce it every session. These are part of the grade, not optional.</p>
+
+      <div class="panel alert">
+        <h4 style="color:var(--red); margin-top:0">The one-line rule</h4>
+        <p class="lead" style="margin-bottom:0">If you would not put it on a public website with your name on it, do not put it in a public AI tool or a public repository.</p>
+      </div>
+
+      <div class="grid2">
+        <div class="card">
+          <h3>Classification &amp; AI hygiene</h3>
+          <ul class="clean">
+            <li>This OPD is unclassified and uses open sources only. Bring no classified or CUI into any exercise.</li>
+            <li>Never input classified or CUI into any public or commercial AI tool, search engine, or third-party service.</li>
+            <li>Treat anything typed into a public AI tool as potentially retained and reviewable. When in doubt, do not type it.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>OPSEC for collection</h3>
+          <ul class="clean">
+            <li>Use non-attributable research accounts and devices, not government credentials, name, or systems.</li>
+            <li>Avoid a signature: do not repeatedly query the same niche targets from an identifiable account.</li>
+            <li>This is about infrastructure, vessels, and events, not specific real persons.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Intelligence oversight</h3>
+          <ul class="clean">
+            <li>Comply with EO 12333, AR 381-10, DoDM 5240.01, and USAREUR-AF guidance.</li>
+            <li>Do not intentionally collect, retain, or disseminate information on US persons except as authorities permit.</li>
+            <li>Coordinate this OPD with your command's oversight and legal/SJA points of contact before execution. If unsure a task is permissible, stop and ask.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Data rights &amp; the public repo</h3>
+          <ul class="clean">
+            <li>Free does not mean unrestricted. Respect every source's terms of use.</li>
+            <li>ACLED specifically: registered free use is fine, but do not re-serve raw data, build a substitute dashboard, or commit raw ACLED data to a public repo. Use must be transformative and attributed.</li>
+            <li>For public tools: no API keys, no raw licensed datasets, no sensitive content, clear attribution. Verify AI outputs, crowd maps, and machine-coded events before trusting them.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEMPLATES -->
+    <section id="templates">
+      <div class="eyebrow">Reusable</div>
+      <h2>Templates</h2>
+      <p class="sub">Copy into the student packet. The discipline is in using them consistently.</p>
+
+      <h3>PIR / SIR / indicator</h3>
+      <ul class="clean">
+        <li><strong>PIR</strong> (one decision-relevant question): e.g. "Will a vessel deliberately threaten undersea infrastructure in [sub-area] in the next 30 days?"</li>
+        <li><strong>SIRs</strong> that decompose the PIR, each with observable indicators.</li>
+        <li>For each indicator, mark: open-source collectable? (Y/N). List what you want but cannot collect openly as a gap.</li>
+      </ul>
+
+      <h3>Source reliability &amp; credibility</h3>
+      <table class="tbl">
+        <tr><th>Reliability (A&ndash;F)</th><th>Credibility (1&ndash;6)</th></tr>
+        <tr><td>A complete &middot; B usually &middot; C fairly &middot; D not usually &middot; E unreliable &middot; F cannot judge</td><td>1 confirmed &middot; 2 probably true &middot; 3 possibly true &middot; 4 doubtful &middot; 5 improbable &middot; 6 cannot judge</td></tr>
+      </table>
+
+      <h3>Collection log</h3>
+      <table class="tbl">
+        <tr><th>#</th><th>Date/time</th><th>Source + link</th><th>Rel.</th><th>Cred.</th><th>Observation (who/what/where/when)</th><th>SIR</th></tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      </table>
+
+      <h3>ACH matrix</h3>
+      <ul class="clean">
+        <li>Rows = evidence/argument items. Columns = hypotheses (sabotage / anchor drag / innocent transit / other).</li>
+        <li>Cells = Consistent / Inconsistent / N/A. Focus on disconfirming evidence; the hypothesis with the least inconsistency is the working estimate.</li>
+        <li>Capture diagnostic evidence (what distinguishes hypotheses) and what would change your mind.</li>
+      </ul>
+
+      <h3>AI-output verification checklist</h3>
+      <ul class="clean">
+        <li>Traced to a named source I can open.</li>
+        <li>Source reliability and credibility rated.</li>
+        <li>Marked confirmed / unsupported / hallucinated.</li>
+        <li>Entities (names, dates, vessels, places) spot-checked for tagging errors.</li>
+        <li>Alternative explanation considered (did the AI just confirm my bias?).</li>
+        <li>Confidence stated (low / moderate / high) with the reason.</li>
+      </ul>
+
+      <h3>Fused product (BLUF)</h3>
+      <div class="code">
+        <button class="copy" data-copy="prod">COPY</button>
+        <pre id="prod">BLUF:
+Most likely COA:        (confidence: ___ ; key sources: ___)
+Most dangerous COA:     (confidence: ___ ; key sources: ___)
+Key assumptions (labeled):
+Intelligence gaps:
+Source reliability summary:
+AI use &amp; verification: where AI was used, which functions, how checked</pre>
+      </div>
+
+      <h3>Capstone README</h3>
+      <div class="code">
+        <button class="copy" data-copy="readme">COPY</button>
+        <pre id="readme"># [Tool name] - NORTH WATCH analyst support
+
+## What it does
+One or two sentences. Be honest about scope.
+
+## What it does NOT do
+The limits. The failure mode. Where a human must stay in the loop.
+
+## Data sources
+Each source and its license/terms. (No raw licensed data committed here.)
+
+## How to run / view
+Steps another analyst can follow.
+
+## OPSEC and data-rights statement
+- Unclassified, open sources only. No classified/CUI.
+- No API keys or sensitive data in this repo.
+- Sources attributed; licensed raw data not redistributed.
+
+## AI use
+Which AI functions are used and how a human verifies the output.</pre>
+      </div>
+
+      <div class="divider"></div>
+      <p class="note">Companion site to the full facilitator's guide. Unclassified // for training use only. Coordinate with intelligence oversight and SJA before execution.</p>
+    </section>
+  </main>
+</div>
+
+<div class="classbar bottom">Unclassified // For Training Use Only</div>
+
+<script>
+(function(){
+  "use strict";
+  var store = (function(){
+    var mem = {}, ok = false;
+    try { var k="__nw"; window.localStorage.setItem(k,"1"); window.localStorage.removeItem(k); ok=true; } catch(e){ ok=false; }
+    return {
+      get:function(k){ try{ return ok ? window.localStorage.getItem(k) : (k in mem ? mem[k] : null); }catch(e){ return (k in mem)?mem[k]:null; } },
+      set:function(k,v){ try{ ok ? window.localStorage.setItem(k,v) : (mem[k]=v); }catch(e){ mem[k]=v; } },
+      del:function(k){ try{ ok ? window.localStorage.removeItem(k) : (delete mem[k]); }catch(e){ delete mem[k]; } }
+    };
+  })();
+  var KEY = "northwatch.progress.v1";
+
+  var checks = Array.prototype.slice.call(document.querySelectorAll(".track-check"));
+  var ring = document.getElementById("ring");
+  var pctEl = document.getElementById("pct");
+  var stampEl = document.getElementById("stamp");
+  var modstat = document.getElementById("modstat");
+
+  var R = 42, C = 2 * Math.PI * R;
+  ring.style.strokeDasharray = C.toFixed(1);
+  ring.style.strokeDashoffset = C.toFixed(1);
+
+  function loadState(){
+    var raw = store.get(KEY);
+    if(!raw) return {};
+    try { return JSON.parse(raw) || {}; } catch(e){ return {}; }
+  }
+  function saveState(state){ store.set(KEY, JSON.stringify(state)); }
+
+  var state = loadState();
+  checks.forEach(function(c){ if(state[c.getAttribute("data-id")]) c.checked = true; });
+
+  function moduleOf(el){
+    var s = el.closest("section[data-module]");
+    return s ? s.getAttribute("data-module") : null;
+  }
+
+  function update(){
+    var total = checks.length, done = 0;
+    var mods = {1:{t:0,d:0},2:{t:0,d:0},3:{t:0,d:0}};
+    checks.forEach(function(c){
+      if(c.checked) done++;
+      var m = moduleOf(c);
+      if(m && mods[m]){ mods[m].t++; if(c.checked) mods[m].d++; }
+    });
+    var pct = total ? Math.round(done/total*100) : 0;
+    pctEl.textContent = pct;
+    ring.style.strokeDashoffset = (C * (1 - pct/100)).toFixed(1);
+    stampEl.textContent = "M-" + (pct<100 ? String(pct).padStart(2,"0") : "GO");
+
+    Array.prototype.forEach.call(modstat.querySelectorAll("li"), function(li){
+      var m = li.getAttribute("data-m");
+      var info = mods[m] || {t:0,d:0};
+      var mp = info.t ? Math.round(info.d/info.t*100) : 0;
+      li.querySelector(".bar i").style.width = mp + "%";
+      li.querySelector(".v").textContent = mp + "%";
+    });
+  }
+
+  checks.forEach(function(c){
+    c.addEventListener("change", function(){
+      var id = c.getAttribute("data-id");
+      if(c.checked) state[id] = 1; else delete state[id];
+      saveState(state);
+      update();
+    });
+  });
+
+  var resetBtn = document.getElementById("reset");
+  resetBtn.addEventListener("click", function(){
+    if(!window.confirm("Clear all progress on this device?")) return;
+    state = {};
+    store.del(KEY);
+    checks.forEach(function(c){ c.checked = false; });
+    update();
+  });
+
+  var side = document.getElementById("side");
+  var menubtn = document.getElementById("menubtn");
+  menubtn.addEventListener("click", function(){ side.classList.toggle("open"); });
+  document.getElementById("navlist").addEventListener("click", function(e){
+    if(e.target.closest("a")) side.classList.remove("open");
+  });
+  document.addEventListener("click", function(e){
+    if(window.innerWidth <= 960 && side.classList.contains("open") &&
+       !side.contains(e.target) && e.target !== menubtn){
+      side.classList.remove("open");
+    }
+  });
+
+  var navAnchors = Array.prototype.slice.call(document.querySelectorAll(".navlist a"));
+  var sections = navAnchors.map(function(a){ return document.querySelector(a.getAttribute("href")); });
+  if("IntersectionObserver" in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){
+          var id = "#" + en.target.id;
+          navAnchors.forEach(function(a){ a.classList.toggle("active", a.getAttribute("href") === id); });
+        }
+      });
+    }, { rootMargin: "-20% 0px -70% 0px", threshold: 0 });
+    sections.forEach(function(s){ if(s) io.observe(s); });
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll(".copy"), function(btn){
+    btn.addEventListener("click", function(){
+      var src = document.getElementById(btn.getAttribute("data-copy"));
+      if(!src) return;
+      var text = src.textContent;
+      var done = function(){ var o=btn.textContent; btn.textContent="COPIED"; setTimeout(function(){ btn.textContent=o; },1400); };
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done, function(){ fallback(text); done(); });
+      } else { fallback(text); done(); }
+    });
+  });
+  function fallback(text){
+    var ta=document.createElement("textarea"); ta.value=text; ta.style.position="fixed"; ta.style.opacity="0";
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand("copy"); }catch(e){}
+    document.body.removeChild(ta);
+  }
+
+  update();
+})();
+</script>
+</body>
+</html>
