@@ -1,0 +1,29 @@
+name: Link check
+
+on:
+  workflow_dispatch:
+  pull_request:
+  schedule:
+    - cron: "0 6 * * 1"  # Mondays 06:00 UTC
+
+permissions:
+  contents: read
+
+jobs:
+  lychee:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          # Many publishers (NATO, ScienceDirect, MarineTraffic, etc.) block bots with 403/429;
+          # accept those so only genuinely dead links fail the run.
+          args: >-
+            --no-progress
+            --accept 200..=299,403,429
+            --max-retries 2
+            --timeout 30
+            --exclude-path LICENSE
+            './**/*.html' './**/*.md'
+          fail: true
