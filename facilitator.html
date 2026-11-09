@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Facilitator's Guide &middot; From Signal to System</title>
+<meta name="description" content="Facilitator's guide for the From Signal to System intelligence OPD and Exercise NORTH WATCH: coordination, timing, module-by-module facilitation notes, answer keys, grading, and AAR.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Facilitator's Guide &middot; From Signal to System">
+<meta property="og:description" content="How to run the From Signal to System intelligence OPD and Exercise NORTH WATCH.">
+<meta property="og:url" content="https://prestondihle.github.io/12th-CAB-Intel-OPD/facilitator.html">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%231E6B3A'/%3E%3Cpath d='M6 22l6-8 5 5 9-11' stroke='%23fff' stroke-width='3' fill='none'/%3E%3C/svg%3E">
+<style>
+  @font-face{font-family:'IBM Plex Sans'; font-style:normal; font-weight:400 700; font-display:swap; src:url(fonts/plex-sans-var.woff2) format('woff2')}
+  @font-face{font-family:'IBM Plex Mono'; font-style:normal; font-weight:400; font-display:swap; src:url(fonts/plex-mono-400.woff2) format('woff2')}
+  @font-face{font-family:'IBM Plex Mono'; font-style:normal; font-weight:600; font-display:swap; src:url(fonts/plex-mono-600.woff2) format('woff2')}
+  @font-face{font-family:'Saira Condensed'; font-style:normal; font-weight:600; font-display:swap; src:url(fonts/saira-condensed-600.woff2) format('woff2')}
+  @font-face{font-family:'Saira Condensed'; font-style:normal; font-weight:700; font-display:swap; src:url(fonts/saira-condensed-700.woff2) format('woff2')}
+  :root{
+    --bg:#EEF1F4; --grid:#E3E8EC; --panel:#FFFFFF; --panel2:#F1F4F7;
+    --line:#D6DDE3; --line2:#C0CAD2;
+    --text:#16202B; --dim:#55626E; --faint:#636F7A;
+    --amber:#925F0F; --amber-dim:#B98A2E;
+    --steel:#15636B; --steel-dim:#A9CACE;
+    --green:#2E8049; --green-bnr:#1E6B3A; --red:#B23A28;
+    --font-display:'Saira Condensed',system-ui,sans-serif;
+    --font:'IBM Plex Sans',system-ui,sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{margin:0; background:var(--bg); color:var(--text); font-family:var(--font); font-size:16px; line-height:1.65; -webkit-font-smoothing:antialiased;
+    background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px); background-size:64px 64px; background-position:-1px -1px}
+  a{color:var(--steel); text-decoration:none}
+  a:hover{color:var(--amber)}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--steel); outline-offset:2px}
+  strong{color:#0C141C; font-weight:600}
+  .classbar{background:var(--green-bnr); color:#EAF6EE; font-family:var(--mono); font-size:11px; letter-spacing:.18em; text-align:center; padding:5px 8px; text-transform:uppercase}
+  .wrap{max-width:900px; margin:0 auto; padding:0 clamp(16px,4vw,48px) 80px}
+  .back{display:inline-block; margin-top:22px; font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase}
+  header{padding:30px 0 6px}
+  .eyebrow{font-family:var(--mono); font-size:11px; letter-spacing:.22em; color:var(--amber); text-transform:uppercase; display:flex; align-items:center; gap:9px; margin-bottom:10px}
+  .eyebrow::before{content:""; width:18px; height:2px; background:var(--amber); display:inline-block}
+  h1{font-family:var(--font-display); font-weight:700; text-transform:uppercase; letter-spacing:.02em; line-height:.98; font-size:clamp(34px,6vw,54px); margin:0 0 14px}
+  h2{font-family:var(--font-display); font-weight:600; text-transform:uppercase; letter-spacing:.03em; font-size:clamp(24px,3.4vw,30px); margin:0 0 8px; line-height:1.05}
+  h3{font-family:var(--font-display); font-weight:600; text-transform:uppercase; letter-spacing:.05em; font-size:18px; margin:26px 0 10px}
+  h4{font-family:var(--mono); font-weight:600; text-transform:uppercase; letter-spacing:.12em; font-size:12.5px; color:var(--amber); margin:18px 0 8px}
+  p{margin:0 0 14px}
+  .lead{font-size:18px}
+  .sub{color:var(--dim)}
+  section{padding:46px 0 8px; scroll-margin-top:12px}
+  .toc{background:var(--panel); border:1px solid var(--line2); padding:16px 20px; margin:18px 0 0}
+  .toc ol{margin:0; padding-left:22px; columns:2; column-gap:28px}
+  .toc li{padding:2px 0; break-inside:avoid; font-size:14.5px}
+  .panel{background:var(--panel); border:1px solid var(--line); padding:20px 22px; margin:16px 0}
+  .panel.amber{border-left:3px solid var(--amber)}
+  .panel.steel{border-left:3px solid var(--steel)}
+  .panel.alert{border-left:3px solid var(--red); background:linear-gradient(180deg,rgba(178,58,40,.05),transparent)}
+  .panel > :last-child{margin-bottom:0}
+  ul.clean{list-style:none; padding:0; margin:0 0 14px}
+  ul.clean li{position:relative; padding:4px 0 4px 22px; color:var(--dim)}
+  ul.clean li::before{content:"\25B8"; position:absolute; left:0; top:4px; color:var(--amber); font-size:12px}
+  ul.check{list-style:none; padding:0; margin:0 0 14px}
+  ul.check li{position:relative; padding:5px 0 5px 28px; color:var(--dim); border-top:1px solid var(--line)}
+  ul.check li:first-child{border-top:none}
+  ul.check li::before{content:""; position:absolute; left:0; top:9px; width:14px; height:14px; border:1.5px solid var(--line2); background:var(--panel)}
+  ol.steps{margin:0 0 14px; padding-left:22px; color:var(--dim)}
+  ol.steps li{padding:3px 0}
+  .tblwrap{overflow-x:auto; margin:14px 0; -webkit-overflow-scrolling:touch}
+  .tblwrap.wide table{min-width:680px}
+  table.tbl{width:100%; border-collapse:collapse; font-size:13.5px; background:var(--panel)}
+  table.tbl th,table.tbl td{border:1px solid var(--line); padding:9px 11px; text-align:left; vertical-align:top}
+  table.tbl th{background:var(--panel2); font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--dim); font-weight:600}
+  table.tbl td{color:var(--dim)}
+  table.tbl td.t{font-family:var(--mono); color:var(--amber); white-space:nowrap; font-size:12.5px}
+  table.tbl th[scope=row]{background:var(--panel); font-family:var(--font); font-size:13.5px; letter-spacing:0; text-transform:none; color:var(--text)}
+  .q{margin:10px 0 0; border:1px solid var(--line); background:var(--panel)}
+  .q div{padding:11px 14px; border-top:1px solid var(--line); color:var(--dim); font-size:14.5px}
+  .q div:first-child{border-top:none}
+  .q b{font-family:var(--mono); font-size:11px; color:var(--amber); letter-spacing:.05em; margin-right:6px}
+  .note{font-family:var(--mono); font-size:11.5px; color:var(--faint); letter-spacing:.03em; margin-top:8px}
+  .divider{height:1px; background:var(--line); margin:40px 0 0}
+  @media (max-width:640px){ .toc ol{columns:1} .panel{padding:16px} }
+  @media print{
+    @page{margin:14mm}
+    body{background:#fff; font-size:10.5pt; line-height:1.5}
+    .back{display:none}
+    .wrap{max-width:none; padding:0}
+    section{padding:14px 0 4px}
+    #coordination,#modules,#answers,#grading{break-before:page}
+    .panel,table.tbl tr,.q div{break-inside:avoid}
+    .classbar{-webkit-print-color-adjust:exact; print-color-adjust:exact}
+    .tblwrap{overflow:visible}
+    .tblwrap.wide table{min-width:0}
+    a{color:#000}
+    .panel a[href^="http"]::after,td a[href^="http"]::after{content:" <" attr(href) ">"; font-family:var(--mono); font-size:8pt; color:#555; word-break:break-all}
+  }
+</style>
+</head>
+<body>
+<div class="classbar">Unclassified // For Training Use Only</div>
+<div class="wrap">
+  <a class="back" href="index.html">&lsaquo; Back to the student site</a>
+
+  <header>
+    <div class="eyebrow">Facilitator's Guide</div>
+    <h1>From Signal<br>to System</h1>
+    <p class="lead">How to prepare, run, grade, and review the intelligence OPD and Exercise NORTH WATCH.</p>
+    <p class="sub">This guide is for the officer or NCO running the OPD. Students do not need it. It assumes you have read the <a href="index.html">student site</a> end to end. Doctrinal references are to FM 2-0, <em>Intelligence</em> (October 2026), unless stated otherwise.</p>
+  </header>
+
+  <nav class="toc" aria-label="Contents">
+    <ol>
+      <li><a href="#intent">Intent and audience</a></li>
+      <li><a href="#coordination">Coordination and preparation</a></li>
+      <li><a href="#timing">Choosing and adjusting the schedule</a></li>
+      <li><a href="#room">Running the room</a></li>
+      <li><a href="#modules">Module-by-module notes</a></li>
+      <li><a href="#answers">Answer keys and worked examples</a></li>
+      <li><a href="#grading">Capstone grading</a></li>
+      <li><a href="#stops">Safety stops</a></li>
+      <li><a href="#trouble">Troubleshooting</a></li>
+      <li><a href="#aar">AAR and follow-up</a></li>
+    </ol>
+  </nav>
+
+  <!-- 1 INTENT -->
+  <section id="intent">
+    <div class="eyebrow">01</div>
+    <h2>Intent and audience</h2>
+    <p><strong>Purpose.</strong> Build analysts who use data and AI tools to work faster without lowering the standard. The standard is the nine characteristics of effective intelligence in FM 2-0, paragraphs 1-3 and 1-4. The course thesis comes straight from FM 2-0's discussion of PED versus analysis and exploitation: AI/ML can structure and fuse data, but critical thinking and contextual understanding "fundamentally require human judgment."</p>
+    <p><strong>End state.</strong> Every cell leaves with a hosted tool it built, a fused I&amp;W product graded against the rubric, and the habit of saying where AI was used and how it was checked.</p>
+    <h3>Audience and cell size</h3>
+    <ul class="clean">
+      <li><strong>Students:</strong> intelligence officers, warrant officers, and NCOs (35-series and civilians in equivalent roles). Staff officers from other warfighting functions benefit from Modules 01 and 02 and can join a cell.</li>
+      <li><strong>Cells:</strong> three to five students. Mix experience levels and put at least one person who is comfortable with code in each cell that chooses Track 2 or Track 3.</li>
+      <li><strong>Facilitators:</strong> one lead facilitator, plus one assistant for every three cells during practical exercises. The assistant's main job in Module 03 is the build clinic.</li>
+    </ul>
+    <h3>What students should already know</h3>
+    <p class="sub">Basic intelligence requirements (PIR and indicators) and the intelligence process. No coding is required; Track 1 needs none. Students who have never used GitHub should create an account and complete GitHub's "Hello World" guide as pre-work.</p>
+  </section>
+
+  <!-- 2 COORDINATION -->
+  <section id="coordination">
+    <div class="eyebrow">02</div>
+    <h2>Coordination and preparation</h2>
+    <div class="panel alert">
+      <h4 style="color:var(--red); margin-top:0">Do this first</h4>
+      <p>Brief the plan to your intelligence oversight officer and servicing judge advocate before you schedule anything. FM 2-0, appendix C, requires a documented mission and authority for intelligence activities and intelligence oversight training before collection. This OPD is training on publicly available information, not a collection mission, but the command, not the facilitator, decides whether it needs anything more. Record the decision.</p>
+    </div>
+
+    <h3>Preparation timeline</h3>
+    <div class="tblwrap wide">
+    <table class="tbl">
+      <thead><tr><th scope="col">When</th><th scope="col">Task</th><th scope="col">Who</th></tr></thead>
+      <tr><td class="t">T-30 days</td><td>Brief the oversight officer, judge advocate, and OPSEC officer. Confirm intelligence oversight training is current for every student.</td><td>Lead facilitator</td></tr>
+      <tr><td class="t">T-30 days</td><td>Choose the schedule option (<a href="#timing">section 3</a>) and book the room and time.</td><td>Lead facilitator</td></tr>
+      <tr><td class="t">T-21 days</td><td>Decide with the S-6 and security manager which devices and networks students will use. Government networks often block flight and vessel trackers, AI chat tools, Colab, and Streamlit. Write the answer into the welcome email so nobody improvises.</td><td>Lead facilitator, S-6, security manager</td></tr>
+      <tr><td class="t">T-21 days</td><td>Confirm which AI tools the command permits for unclassified training use. Use only those tools in the room.</td><td>Lead facilitator</td></tr>
+      <tr><td class="t">T-14 days</td><td>Send the welcome email: site link, schedule, pre-work (readings, GitHub account), device rules, and the guardrails page.</td><td>Lead facilitator</td></tr>
+      <tr><td class="t">T-14 days</td><td>Build cells and announce them. Ask each cell to pick a provisional capstone track.</td><td>Lead facilitator</td></tr>
+      <tr><td class="t">T-7 days</td><td>Dry-run every tool on the student site from the network students will use. Note anything blocked and pick a substitute (<a href="#trouble">section 9</a>).</td><td>Assistant</td></tr>
+      <tr><td class="t">T-7 days</td><td>For one-day or six-session formats: prepare a Track 2 starter notebook that already pulls one free feed into the course schema, so cells spend their time on analysis, not setup.</td><td>Assistant</td></tr>
+      <tr><td class="t">T-7 days</td><td>Pick the incident for the Module 02 ACH and build a one-page fact sheet from current open reporting (<a href="#answers">section 6</a>).</td><td>Lead facilitator</td></tr>
+      <tr><td class="t">T-1 day</td><td>Print the packet: templates, rubric, guardrails, and the fact sheet. Test the projector, Wi-Fi, and screen sharing.</td><td>Assistant</td></tr>
+    </table>
+    </div>
+
+    <h3>Materials</h3>
+    <ul class="check">
+      <li>Student site open on every device; this guide on the facilitator's device only</li>
+      <li>Printed packet per student: templates, rubric, guardrails page, incident fact sheet</li>
+      <li>Large map of the Baltic Sea with cable and pipeline routes (print from the Submarine Cable Map or EMODnet)</li>
+      <li>Whiteboard or butcher paper for each cell's ACH matrix</li>
+      <li>Timer visible to the room</li>
+      <li>Track 2 starter notebook (short formats)</li>
+      <li>Capstone grading sheets (<a href="#grading">section 7</a>)</li>
+    </ul>
+  </section>
+
+  <!-- 3 TIMING -->
+  <section id="timing">
+    <div class="eyebrow">03</div>
+    <h2>Choosing and adjusting the schedule</h2>
+    <p class="sub">The student site lists four <a href="index.html#schedule">schedule options</a>. Choose by the time you can protect, not the time on paper.</p>
+    <div class="tblwrap wide">
+    <table class="tbl">
+      <thead><tr><th scope="col">Option</th><th scope="col">Best when</th><th scope="col">Main risk</th><th scope="col">Mitigation</th></tr></thead>
+      <tr><th scope="row">A &middot; One day (about 8 h)</th><td>Training holiday or off-site; one chance to gather everyone</td><td>Fatigue by Module 03; thin collection window; weak capstones</td><td>Enforce pre-work; give a Track 2 starter; steer to Track 1 or 2; hard stop on breaks</td></tr>
+      <tr><th scope="row">B &middot; Three sessions (3 &times; 3 h)</th><td>The default: weekly OPD with good attendance</td><td>Students skip the between-session collection</td><td>Open session 2 with the collection-log review so missing work shows</td></tr>
+      <tr><th scope="row">C &middot; Six sessions (6 &times; 90 min)</th><td>A standing OPD hour or lunch-and-learn</td><td>Momentum loss; homework not done</td><td>Assign homework by name; keep sessions on the same day and time</td></tr>
+      <tr><th scope="row">D &middot; Four weeks, blended</th><td>Dispersed units or several time zones</td><td>Cells drift without contact</td><td>A shared channel per cell; facilitator checks hand-offs weekly</td></tr>
+    </table>
+    </div>
+
+    <h3>If you have to cut time</h3>
+    <p class="sub">Cut in this order:</p>
+    <ol class="steps">
+      <li>Discussion questions: run the two marked "core" in <a href="#modules">section 5</a> and skip the rest.</li>
+      <li>The human-only versus AI-augmented comparison in Phase 2: do it as a whole-room demonstration instead of in every cell.</li>
+      <li>Capstone track ambition: move cells to Track 1.</li>
+      <li>Brief length: three minutes per cell instead of five.</li>
+    </ol>
+    <div class="panel amber">
+      <h4 style="margin-top:0">Never cut</h4>
+      <ul class="clean">
+        <li>The guardrails brief at the start.</li>
+        <li>Verification of AI output in Phase 2. It is the point of the course.</li>
+        <li>The AI-use-and-verification line in the final product.</li>
+        <li>The AAR.</li>
+      </ul>
+    </div>
+
+    <h3>If you have extra time</h3>
+    <ul class="clean">
+      <li>Lengthen the collection window. A week or more makes Module 01's overload lesson land much harder.</li>
+      <li>Add a red hat/team exercise in Module 02: one cell argues the threat's view of the cable problem (see FM 2-0, paragraph 3-21, and ATP 2-33.4).</li>
+      <li>Hold a 30-day follow-up to see whether any tool is still in use, and why or why not.</li>
+    </ul>
+  </section>
+
+  <!-- 4 ROOM -->
+  <section id="room">
+    <div class="eyebrow">04</div>
+    <h2>Running the room</h2>
+    <ul class="clean">
+      <li><strong>Open every session with guardrails.</strong> Thirty seconds is enough after the first time: "Unclassified, open sources only, nothing sensitive in an AI tool or a public repo. If in doubt, stop and ask."</li>
+      <li><strong>Grade against the rubric out loud.</strong> When a student makes a claim, ask which characteristic it meets or fails. By Module 03 students should do this for each other.</li>
+      <li><strong>Make AI mistakes visible.</strong> When a cell catches a hallucination or a tagging error, stop the room and show it. Those moments teach more than any slide.</li>
+      <li><strong>Demonstrate AI tools on the projector,</strong> using only the tools the command approved. Show a prompt, show the output, then verify one claim live.</li>
+      <li><strong>Push on likelihood versus confidence.</strong> Students blend them. Use ICD 203's language and make them say both, separately.</li>
+      <li><strong>Watch for overattribution.</strong> The NORTH WATCH incidents invite "it was obviously sabotage." Ask what evidence would distinguish sabotage from an accident, and whether they have it.</li>
+      <li><strong>Keep cells honest about scope</strong> in Module 03. A small tool that works and is documented beats an ambitious one that does not run.</li>
+    </ul>
+  </section>
+
+  <!-- 5 MODULES -->
+  <section id="modules">
+    <div class="eyebrow">05</div>
+    <h2>Module-by-module notes</h2>
+    <p class="sub">For each module: the point, the doctrine link, what good answers to the discussion questions contain, and where cells usually go wrong. "Core" marks the questions to keep when time is short.</p>
+
+    <h3>Module 01 &middot; The Analyst &amp; the Flood</h3>
+    <p><strong>The point.</strong> Judgment comes before automation. Students frame the problem and collect by hand until they feel the overload that Modules 02 and 03 address.</p>
+    <p><strong>Doctrine link.</strong> Plan and direct, and collect (FM 2-0, paragraphs 1-27 to 1-32). Intelligence requirements are primarily PIRs, which the staff breaks into SIRs and indicators. Note FM 2-0's point that the commander holds the authority to task collection assets; the G-2/S-2 informs the collection plan but does not task.</p>
+    <h4>Discussion look-fors</h4>
+    <div class="q">
+      <div><b>Q1 &middot; core</b> Good answers name a specific expectation, such as "Russia did it" or "it's always an anchor," and a concrete guard: ACH, a devil's advocate, or writing down what evidence would change their mind <em>before</em> collecting.</div>
+      <div><b>Q2</b> Look for design causes: no collection priorities, everyone watching everything, no one owning triage, products measured by volume.</div>
+      <div><b>Q3</b> Any of the three is defensible. Push for a NORTH WATCH-specific failure, such as AIS spoofing feeding an AI summary that states a false position as fact.</div>
+      <div><b>Q4</b> Timeliness breaks first, then relevance: the product answers yesterday's question.</div>
+      <div><b>Q5 &middot; core</b> Most cells say <em>predictive</em> is hardest with open sources: intent is rarely visible. Good answers also flag <em>reliable</em>, because of AIS spoofing and crowd maps.</div>
+      <div><b>Q6</b> Framing and collecting usually blur as soon as the first feed is opened. That is normal (FM 2-0, paragraph 1-26) as long as the requirements are updated and written down.</div>
+      <div><b>Q7</b> Look for the link to FM 2-0's "relevant": collect what answers the requirement. A good justification ties every collection effort to a SIR.</div>
+    </div>
+    <h4>Common pitfalls</h4>
+    <ul class="clean">
+      <li>PIRs that are topics, not questions ("Baltic cables"). Make them decision-relevant and time-bound.</li>
+      <li>Indicators nobody can observe in open sources, not marked as gaps.</li>
+      <li>Rating the platform rather than the original source. MarineTraffic is a display; the AIS transponder is the source.</li>
+      <li>Baselines that state assumptions as facts.</li>
+    </ul>
+
+    <h3>Module 02 &middot; Augmenting the Analyst</h3>
+    <p><strong>The point.</strong> AI makes the analyst faster only if the analyst verifies it. Students structure the data, use AI for three functions, catch its errors, run ACH, and state likelihood and confidence separately.</p>
+    <p><strong>Doctrine link.</strong> Process and exploit, and analyze and produce (FM 2-0, paragraphs 1-33 to 1-39), the data-literacy note in paragraph 1-34, and the "PED versus analysis and exploitation" vignette in chapter 3. ICD 203 sets the analytic standards for sourcing and uncertainty.</p>
+    <h4>Discussion look-fors</h4>
+    <div class="q">
+      <div><b>Q1 &middot; core</b> Both readings are defensible. Professionals should calibrate confidence to evidence, not to the tool; flat confidence despite better results can be healthy skepticism or a failure to recognize better work.</div>
+      <div><b>Q2</b> Summarization is usually the most dangerous: it silently drops caveats and merges sources. Entity extraction is a close second (wrong vessel name or IMO number).</div>
+      <div><b>Q3</b> The bright line is classified or CUI information, and anything they would not post publicly with their name on it.</div>
+      <div><b>Q4</b> Look for testable criteria: known error rate on our data, traceable sourcing, a human checkpoint, and someone accountable for it.</div>
+      <div><b>Q5</b> ACH protects against confirmation bias by forcing attention to disconfirming evidence. AI can reintroduce it by agreeing with the analyst's framing or by leading with the most common explanation.</div>
+      <div><b>Q6 &middot; core</b> Good answers locate the line: clustering and entity extraction are PED; deciding what the cluster <em>means</em> is analysis. Watch for cells that let the AI summary become the assessment.</div>
+      <div><b>Q7</b> Usually sourcing (not describing source quality) or uncertainty (likelihood and confidence blended).</div>
+      <div><b>Q8</b> FM 2-0's <em>usable</em> improves most from structuring alone, followed by <em>complete</em>.</div>
+    </div>
+    <h4>Common pitfalls</h4>
+    <ul class="clean">
+      <li>Verifying only the claims that look wrong. Require every claim to be marked confirmed, unsupported, or hallucinated.</li>
+      <li>ACH matrices that count consistent evidence. The method works on inconsistency.</li>
+      <li>"Highly likely, with high confidence" as one phrase. Separate them.</li>
+      <li>Pasting whole articles from restricted sources into AI tools. Check the source's terms.</li>
+    </ul>
+
+    <h3>Module 03 &middot; Building the Machine</h3>
+    <p><strong>The point.</strong> Automate the repeatable part, keep a human on the judgment, and document both so another analyst can trust or reject the tool.</p>
+    <p><strong>Doctrine link.</strong> Disseminate and integrate, and evaluate and provide feedback. FM 2-0 says the Army "will likely implement fully in the near future" automated processing, and requires data that is visible, accessible, understandable, linked, trustworthy, interoperable, and secure (paragraph 1-34).</p>
+    <h4>Discussion look-fors</h4>
+    <div class="q">
+      <div><b>Q1 &middot; core</b> The human stays on interpretation, on any judgment about intent, and on what goes to the commander.</div>
+      <div><b>Q2</b> Reasonable unattended actions: pulling and filtering a feed, flagging a rule-based anomaly. Never automated: attributing intent, or sending a product to the commander.</div>
+      <div><b>Q3 &middot; core</b> A good answer names the failure mode (a missed vessel because of an AIS gap), who notices (the analyst checking the flag list against GFW gap events), and how fast (the next watch).</div>
+      <div><b>Q4</b> Common single changes: a measured error rate, source traceability on every output, or a named owner.</div>
+      <div><b>Q5</b> The tool usually improves timely, usable, and complete, and endangers accurate and reliable. Good designs show sources and confidence next to every flag.</div>
+      <div><b>Q6</b> Most student tools fail "linked" and "interoperable": outputs nobody else's system can ingest. A consistent schema and CSV or JSON export fixes most of it.</div>
+    </div>
+    <h4>Build clinic tips</h4>
+    <ul class="clean">
+      <li>Check every repo for keys and raw licensed data <em>before</em> it goes public. Look in notebook outputs too.</li>
+      <li>Track 1 cells finish fastest. Have them help other cells test their tools.</li>
+      <li>If a Track 3 app will not deploy, accept a working notebook plus a screenshot and grade the analysis.</li>
+    </ul>
+  </section>
+
+  <!-- 6 ANSWERS -->
+  <section id="answers">
+    <div class="eyebrow">06</div>
+    <h2>Answer keys and worked examples</h2>
+
+    <h3>Example requirements (Phase 1)</h3>
+    <p class="sub">One defensible framing. Accept others that are decision-relevant and observable.</p>
+    <div class="panel steel">
+      <p style="margin-bottom:0"><strong>PIR:</strong> Will a vessel deliberately damage undersea cables or pipelines in the Gulf of Finland or central Baltic in the next 30 days?</p>
+    </div>
+    <div class="tblwrap wide">
+    <table class="tbl">
+      <thead><tr><th scope="col">SIR</th><th scope="col">Indicators</th><th scope="col">Open-source collectable?</th></tr></thead>
+      <tr><th scope="row">1. Are vessels of interest loitering over or slowly crossing cable and pipeline corridors?</th><td>Speed under 3 knots over a corridor; repeated passes; route deviation toward a corridor; anchoring outside designated areas</td><td>Yes: AIS trackers, Global Fishing Watch, cable maps</td></tr>
+      <tr><th scope="row">2. Are vessels of interest concealing their movements?</th><td>AIS gaps near corridors; identity or flag changes; position jumps that suggest spoofing; SAR detections with no AIS match</td><td>Partly: GFW gap events and SAR detections; spoofing is hard to prove</td></tr>
+      <tr><th scope="row">3. Are vessels of interest linked to sanctioned or shadow-fleet networks?</th><td>Sanctions listing; recent ownership or management change; flag of convenience; old tanker with opaque insurance</td><td>Yes: OpenSanctions, official sanctions lists, reporting</td></tr>
+      <tr><th scope="row">4. Is the electromagnetic and grey-zone environment escalating?</th><td>Rising GNSS interference; airspace violations; hostile official statements about Baltic infrastructure</td><td>Yes: GPSJam, news, official statements</td></tr>
+      <tr><th scope="row">5. Is damage already occurring?</th><td>Operator outage notices; coast guard or navy statements; ships detained or boarded</td><td>Yes, with delay</td></tr>
+      <tr><th scope="row">Gap</th><td>Crew intent; orders from a state sponsor; condition of anchor equipment</td><td>No: list as intelligence gaps</td></tr>
+    </table>
+    </div>
+
+    <h3>Candidate incidents for the ACH (Phase 2)</h3>
+    <p class="sub">Pick one and build a one-page fact sheet from current reporting before the event. These summaries are starting points only. Investigations and legal proceedings on several of them continued after the initial reporting, so check the current status and cite your sources. The disagreement among official findings is the lesson.</p>
+    <div class="tblwrap wide">
+    <table class="tbl">
+      <thead><tr><th scope="col">Incident</th><th scope="col">What was widely reported at the time</th><th scope="col">Why it teaches well</th></tr></thead>
+      <tr><th scope="row">Balticconnector, October 2023</th><td>Gas pipeline and nearby cables between Finland and Estonia damaged; Finnish investigators linked the damage to the anchor of a Hong Kong-flagged container ship.</td><td>Physical evidence (an anchor) but contested intent</td></tr>
+      <tr><th scope="row">C-Lion1 and BCS cables, November 2024</th><td>Two telecom cables cut within about a day; a Chinese-flagged bulk carrier was suspected of dragging its anchor.</td><td>Strong AIS track, weak intent evidence; questions of state involvement</td></tr>
+      <tr><th scope="row">Estlink 2, December 2024</th><td>Power cable and several telecom cables damaged; Finland detained a tanker described by European officials as part of Russia's shadow fleet.</td><td>Shadow-fleet framing invites overattribution; legal outcome is a separate question from the analytic one</td></tr>
+      <tr><th scope="row">Latvia&ndash;Gotland cable, January 2025</th><td>Fibre cable damaged; Sweden seized a vessel; investigators later pointed to an accident rather than sabotage.</td><td>A case where the "obvious" answer was officially rejected</td></tr>
+    </table>
+    </div>
+
+    <h3>ACH scaffold</h3>
+    <p class="sub">What a strong cell's matrix usually contains, whichever incident you choose:</p>
+    <ul class="clean">
+      <li><strong>Diagnostic evidence:</strong> how long the anchor dragged (kilometres of seabed scarring point away from a brief accident); speed and course changes at the moment of damage; whether the crew reported the anchor problem; weather and sea state; the vessel's maintenance record.</li>
+      <li><strong>Non-diagnostic evidence</strong> (consistent with every hypothesis): the vessel's flag, its ownership network, and the political climate. These matter for the PIR but do not distinguish sabotage from an accident.</li>
+      <li><strong>Evidence to treat with care:</strong> official attributions made quickly and later revised; social media claims; AIS positions during known GNSS interference.</li>
+      <li><strong>A good conclusion</strong> ranks every hypothesis, states likelihood and confidence separately, names the two or three items it depends on, and lists what would change it.</li>
+    </ul>
+
+    <h3>Check-on-learning keys</h3>
+    <div class="tblwrap wide">
+    <table class="tbl">
+      <thead><tr><th scope="col">Item</th><th scope="col">Expected answer</th></tr></thead>
+      <tr><th scope="row">Intelligence process steps (FM 2-0)</th><td>Plan and direct; collect; process and exploit; analyze and produce; disseminate and integrate; evaluate and provide feedback.</td></tr>
+      <tr><th scope="row">Characteristics of effective intelligence</th><td>Accurate, timely, usable, complete, precise, reliable (relevant information); relevant, predictive, tailored (intelligence-centric).</td></tr>
+      <tr><th scope="row">PIR / SIR / indicator</th><td>PIR: the intelligence component of the commander's critical information requirements. SIR: a narrower question that breaks a PIR down. Indicator: an observable that answers a SIR.</td></tr>
+      <tr><th scope="row">Three biases and mitigations</th><td>For example: confirmation bias (ACH, devil's advocate); anchoring (state the alternatives first); mirror imaging (red hat/team analysis); availability (base rates).</td></tr>
+      <tr><th scope="row">Reliability and credibility</th><td>Reliability A (completely reliable) to F (cannot be judged); credibility 1 (confirmed) to 6 (cannot be judged).</td></tr>
+      <tr><th scope="row">AI functions and limits</th><td>Search (thin or wrong citations); summarization (drops caveats, invents detail); entity extraction (mis-tagging names, dates, vessels).</td></tr>
+      <tr><th scope="row">PED vs. analysis and exploitation</th><td>PED converts collected data into usable information and increasingly uses AI/ML; analysis and exploitation fuses information into intelligence and requires human judgment.</td></tr>
+      <tr><th scope="row">Hallucination / automation bias</th><td>Hallucination: the model states something false with no source. Automation bias: the analyst accepts machine output because a machine produced it.</td></tr>
+    </table>
+    </div>
+  </section>
+
+  <!-- 7 GRADING -->
+  <section id="grading">
+    <div class="eyebrow">07</div>
+    <h2>Capstone grading</h2>
+    <p class="sub">Score each cell out of 25. The OPSEC and data-rights check is a gate: a cell that fails it does not pass until the repo is fixed, whatever its score. Grade analytic value, not code volume.</p>
+    <div class="tblwrap wide">
+    <table class="tbl">
+      <thead><tr><th scope="col">Criterion</th><th scope="col">5 &middot; Exceeds</th><th scope="col">3 &middot; Meets</th><th scope="col">1 &middot; Below</th></tr></thead>
+      <tr><th scope="row">Analytic value of the tool</th><td>Saves real analyst time on a NORTH WATCH task and keeps the human on judgment</td><td>Works and helps, but marginally</td><td>Does not run, or automates judgment</td></tr>
+      <tr><th scope="row">Fused product vs. the nine characteristics</th><td>Meets all nine; most likely and most dangerous COAs are distinct and supported</td><td>Meets most; one or two weak</td><td>Several missing; assumptions presented as facts</td></tr>
+      <tr><th scope="row">Likelihood, confidence, and sourcing (ICD 203)</th><td>Standard likelihood terms; separate confidence with reasons; sources rated</td><td>Present but partly blended or unrated</td><td>Missing or blended throughout</td></tr>
+      <tr><th scope="row">AI use and verification</th><td>States every AI function used, how each output was checked, and at least one error caught</td><td>States use and a general check</td><td>Missing, or AI output used unverified</td></tr>
+      <tr><th scope="row">Documentation and brief</th><td>README lets another analyst run it; brief covers what the tool cannot do</td><td>README and brief adequate</td><td>Another analyst could not use it</td></tr>
+      <tr><th scope="row">Gate: OPSEC and data rights</th><td colspan="3">Pass or fail. No keys, no raw licensed data, no sensitive content, sources attributed, statement present.</td></tr>
+    </table>
+    </div>
+  </section>
+
+  <!-- 8 STOPS -->
+  <section id="stops">
+    <div class="eyebrow">08</div>
+    <h2>Safety stops</h2>
+    <div class="panel alert">
+      <p>Stop the activity and act immediately if any of these happens:</p>
+      <ul class="clean">
+        <li><strong>Classified or CUI information appears</strong> on an unclassified device, in an AI tool, or in a repo. Stop work on that device and notify the security manager under your unit's spillage procedures. Do not try to clean it up yourself.</li>
+        <li><strong>A student collects or keeps information about a U.S. person</strong> outside what the authorities permit. Stop, do not disseminate it, and consult the oversight officer (DODM 5240.01, procedures 2 to 4; AR 381-10).</li>
+        <li><strong>A student engages with a target</strong>: messaging, following, joining groups, or creating cover accounts. NORTH WATCH is passive viewing of public information only.</li>
+        <li><strong>A repo goes public with keys or raw licensed data.</strong> Make it private, rotate the key, and remove the data from the history.</li>
+        <li><strong>Anyone is unsure whether a task is permitted.</strong> Pause it and ask. That is the right answer, not a failure.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 9 TROUBLE -->
+  <section id="trouble">
+    <div class="eyebrow">09</div>
+    <h2>Troubleshooting</h2>
+    <div class="tblwrap wide">
+    <table class="tbl">
+      <thead><tr><th scope="col">Problem</th><th scope="col">Fix</th></tr></thead>
+      <tr><th scope="row">A tracker or AI tool is blocked on the network</th><td>Use the substitute the dry run identified (for example, VesselFinder for MarineTraffic, adsb.lol for ADS-B Exchange), or switch to the devices the command approved.</td></tr>
+      <tr><th scope="row">Free API rate limit hit (OpenSky, GDELT)</th><td>Cache results to a CSV in the repo for the session and query less often. Rate limits are a real-world constraint worth discussing.</td></tr>
+      <tr><th scope="row">A live feed shows nothing interesting</th><td>That is a valid result. Discuss the absence of evidence, then widen the area or window, or switch to the incident fact sheet.</td></tr>
+      <tr><th scope="row">GitHub Pages site does not appear</th><td>Repo Settings &rsaquo; Pages &rsaquo; deploy from branch <code>main</code>, folder <code>/ (root)</code>; make sure the file is named <code>index.html</code>; wait a few minutes.</td></tr>
+      <tr><th scope="row">Colab session reset and work lost</th><td>Save the notebook to the GitHub repo after every block. Make this a rule from the start.</td></tr>
+      <tr><th scope="row">Streamlit app is asleep or will not deploy</th><td>Wake it before the brief. If it will not deploy, grade the notebook and a screenshot.</td></tr>
+      <tr><th scope="row">A student cannot create a GitHub account on the network</th><td>Pair them with a cell member's repo as a collaborator and fix the account afterwards.</td></tr>
+    </table>
+    </div>
+  </section>
+
+  <!-- 10 AAR -->
+  <section id="aar">
+    <div class="eyebrow">10</div>
+    <h2>AAR and follow-up</h2>
+    <p class="sub">This is the course's own "evaluate and provide feedback" step. Run it before anyone leaves.</p>
+    <h3>AAR questions (20 to 30 minutes)</h3>
+    <ol class="steps">
+      <li>What was supposed to happen? What actually happened? Why was there a difference?</li>
+      <li>Which characteristic of effective intelligence did AI help most? Which did it put most at risk?</li>
+      <li>What AI error did your cell catch, and how? What might you have missed?</li>
+      <li>Which tool or tactic will you actually use at work next month?</li>
+      <li>What should we sustain and improve in this OPD next time?</li>
+    </ol>
+    <h3>After the event</h3>
+    <ul class="check">
+      <li>Collect repo links and record capstone scores.</li>
+      <li>File AAR notes with the S-2 and update this guide and the site (open an issue or pull request on the course repo).</li>
+      <li>Check that every public student repo passed the OPSEC and data-rights gate.</li>
+      <li>Optional 30-day follow-up: is any tool still running? What stopped the others?</li>
+    </ul>
+
+    <div class="divider"></div>
+    <p class="note">Facilitator's guide for the <a href="index.html">From Signal to System</a> OPD. Unclassified // for training use only. Doctrine: FM 2-0, <em>Intelligence</em> (October 2026); ICD 203, <em>Analytic Standards</em>. Coordinate with intelligence oversight and the judge advocate before execution.</p>
+  </section>
+</div>
+<div class="classbar">Unclassified // For Training Use Only</div>
+</body>
+</html>

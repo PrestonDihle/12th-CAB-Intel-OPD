@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>From Signal to System &middot; Intelligence OPD</title>
-<meta name="description" content="A three-session, case-study-based intelligence OPD fusing traditional analysis, data-driven methods, and AI. Companion site for Exercise NORTH WATCH.">
+<meta name="description" content="A three-module, case-study-based intelligence OPD fusing traditional analysis, data-driven methods, and AI. Companion site for Exercise NORTH WATCH.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="From Signal to System &middot; Intelligence OPD">
 <meta property="og:description" content="Fusing traditional analysis, data-driven methods, and AI. Companion site for Exercise NORTH WATCH.">
@@ -196,6 +196,13 @@
   .dl{display:flex; flex-wrap:wrap; gap:8px; margin:10px 0 4px}
   .dl a{font-family:var(--mono); font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; border:1px solid var(--steel-dim); padding:5px 10px; background:var(--panel)}
   .dl a:hover{border-color:var(--amber-dim)}
+  .tabs{display:flex; flex-wrap:wrap; gap:0; border-bottom:1px solid var(--line2); margin:18px 0 0}
+  .tabs [role=tab]{background:transparent; border:1px solid transparent; border-bottom:none; margin-bottom:-1px; padding:9px 14px; font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--dim); cursor:pointer}
+  .tabs [role=tab]:hover{color:var(--text)}
+  .tabs [role=tab][aria-selected=true]{background:var(--panel); border-color:var(--line2); color:var(--amber)}
+  .tabpanel{background:var(--panel); border:1px solid var(--line2); border-top:none; padding:6px 20px 14px}
+  .tabpanel h3 .chip{margin:0 0 0 8px; vertical-align:middle}
+  .tabpanel table.tbl td[rowspan]{background:var(--panel2)}
   ol.steps{margin:0 0 14px; padding-left:22px; color:var(--dim)}
   ol.steps li{padding:3px 0}
   a:focus-visible,button:focus-visible{outline:2px solid var(--steel); outline-offset:2px}
@@ -232,6 +239,10 @@
     .lab a[href^="http"]::after,.panel a[href^="http"]::after{content:" <" attr(href) ">"; font-family:var(--mono); font-size:8pt; color:#555; word-break:break-all}
     .tool .tn a{font-size:0}
     .tool .tn a::after{content:attr(href); font-size:8pt; letter-spacing:0; text-transform:none}
+    .tabs{display:none}
+    .tabpanel[hidden]{display:block !important}
+    .tabpanel{border:1px solid var(--line2); margin-bottom:12px; break-inside:auto}
+    #schedule{break-before:page}
     a{color:#000}
   }
 </style>
@@ -253,6 +264,7 @@
     <ul class="navlist" id="navlist">
       <li><a href="#overview"><span class="ix">00</span>Overview</a></li>
       <li><a href="#casestudy"><span class="ix">CS</span>Case Study</a></li>
+      <li><a href="#schedule"><span class="ix">SC</span>Schedule Options</a></li>
       <li><a href="#m1"><span class="ix">01</span>The Analyst &amp; the Flood</a></li>
       <li><a href="#m2"><span class="ix">02</span>Augmenting the Analyst</a></li>
       <li><a href="#m3"><span class="ix">03</span>Building the Machine</a></li>
@@ -260,6 +272,7 @@
       <li><a href="#tools"><span class="ix">TL</span>Tools</a></li>
       <li><a href="#guardrails"><span class="ix">!!</span>Guardrails</a></li>
       <li><a href="#templates"><span class="ix">TP</span>Templates</a></li>
+      <li><a href="facilitator.html"><span class="ix">FG</span>Facilitator's Guide &rsaquo;</a></li>
     </ul>
     <div class="navfoot">
       Progress is saved in this browser on this device only.
@@ -270,12 +283,12 @@
   <main>
     <!-- HERO / OVERVIEW -->
     <section id="overview" class="hero">
-      <div class="eyebrow">Three Sessions &middot; Case-Study Based</div>
+      <div class="eyebrow">Three Modules &middot; Case-Study Based &middot; Flexible Schedule</div>
       <div class="herogrid">
         <div>
           <h1>From Signal<br>to System</h1>
           <p class="lead">Fusing traditional analysis, data-driven methods, and artificial intelligence for the intelligence warfighting function.</p>
-          <p class="sub">OSINT is the vehicle, not the subject. The subject is sound tradecraft, measured against the Army standard for effective intelligence, and the disciplined integration of data and AI into that tradecraft. One scenario, <strong>Exercise NORTH WATCH</strong>, runs through all three sessions and builds toward a working tool you host yourself.</p>
+          <p class="sub">OSINT is the vehicle, not the subject. The subject is sound tradecraft, measured against the characteristics of effective intelligence in FM 2-0 (2026), and the disciplined integration of data and AI into that tradecraft. One scenario, <strong>Exercise NORTH WATCH</strong>, runs through all three modules and builds toward a working tool you host yourself.</p>
         </div>
         <aside class="readout" aria-label="Mission readiness">
           <div class="rh"><span>Mission Readiness</span><span id="stamp">M-00</span></div>
@@ -309,13 +322,30 @@
       </ul>
 
       <h3>The standard: characteristics of effective intelligence</h3>
-      <p class="sub">Every discussion, exercise, and product is graded against this rubric. AI and data tools change how fast and how completely you meet it; they do not change the standard, and several of these are exactly where naive AI use fails. Source: the characteristics of effective intelligence in ADP 2-0 and FM 2-0, <em>Intelligence</em>, grouped here for teaching.</p>
-      <div style="margin-top:12px">
-        <div class="charrow"><div class="k">Timely</div><div class="v">Provided early enough to support a decision and prevent surprise; flows continuously before, during, and after operations.</div></div>
-        <div class="charrow"><div class="k">Relevant &amp; tailored</div><div class="v">Answers the commander's requirements; delivered in the requested format; clear, concise, usable for a decision.</div></div>
-        <div class="charrow"><div class="k">Accurate &amp; reliable</div><div class="v">Multiple sources and disciplines; fact separated from assumption; alternative assessments when needed; source reliability and confidence stated up front.</div></div>
-        <div class="charrow"><div class="k">Predictive</div><div class="v">Addresses what the threat can do (most dangerous COA) and is most likely to do (most likely COA); anticipates needs across longer time windows.</div></div>
-        <div class="charrow"><div class="k">Enterprise standard</div><div class="v">Usable (correct format for databasing and display), complete (all necessary components), and precise (the right level of detail to answer the requirement).</div></div>
+      <p class="sub">Every discussion, exercise, and product is graded against this rubric. AI and data tools change how fast and how completely you meet it; they do not change the standard, and several of these are exactly where naive AI use fails. Source: FM 2-0, <em>Intelligence</em> (October 2026), paragraphs 1-3 and 1-4. The first six are the characteristics of relevant information (ADP 3-13); the last three are specific to intelligence.</p>
+      <h4>Relevant-information characteristics</h4>
+      <div>
+        <div class="charrow"><div class="k">Accurate</div><div class="v">Identifies threat intentions, capabilities, limitations, and dispositions as far as possible. Draws on multiple sources and disciplines to reduce the risk of deception or misreading, and presents alternative or contradictory assessments when possible.</div></div>
+        <div class="charrow"><div class="k">Timely</div><div class="v">Arrives early enough to support operations and prevent surprise, and flows continuously before, during, and after an operation.</div></div>
+        <div class="charrow"><div class="k">Usable</div><div class="v">Comes in the correct data-file format for databasing and display, so it can feed further analysis and be used across the staff.</div></div>
+        <div class="charrow"><div class="k">Complete</div><div class="v">Products and briefings contain every necessary component.</div></div>
+        <div class="charrow"><div class="k">Precise</div><div class="v">Gives the necessary detail, with enough clarity to answer the requirement.</div></div>
+        <div class="charrow"><div class="k">Reliable</div><div class="v">Evaluates how far the collected information is trustworthy, uncorrupted, and undistorted. Any concern about reliability is stated up front.</div></div>
+      </div>
+      <h4>Intelligence-centric characteristics</h4>
+      <div>
+        <div class="charrow"><div class="k">Relevant</div><div class="v">Supports the commander's requirements.</div></div>
+        <div class="charrow"><div class="k">Predictive</div><div class="v">Tells the commander what the threat can do (emphasizing the most dangerous COA) and is most likely to do (the most likely COA), and anticipates the commander's intelligence needs.</div></div>
+        <div class="charrow"><div class="k">Tailored</div><div class="v">Delivered in the format the commander and staff asked for: clear, concise, and usable for a decision.</div></div>
+      </div>
+
+      <h3>Doctrinal anchor: FM 2-0 (2026) and this course</h3>
+      <p class="sub">The October 2026 FM 2-0 speaks directly to what this OPD practices. Read these four points before Module 01; the discussions come back to them.</p>
+      <div class="grid2">
+        <div class="card"><span class="chip s">Intelligence process</span><p class="sub" style="margin:0">FM 2-0 now uses the joint step names: <strong>plan and direct, collect, process and exploit, analyze and produce, disseminate and integrate, evaluate and provide feedback</strong>. The steps often overlap rather than run in strict sequence. Each module covers two of them.</p></div>
+        <div class="card"><span class="chip s">AI/ML and data literacy</span><p class="sub" style="margin:0">Processing may integrate AI/ML to structure and refine raw data, and FM 2-0 expects automated processing to grow. Analysts must therefore be <strong>data literate</strong>: able to read, understand, and evaluate data, and aware of its limitations, threats, and risks.</p></div>
+        <div class="card"><span class="chip a">PED vs. analysis and exploitation</span><p class="sub" style="margin:0">PED will lean more and more on AI/ML to structure and fuse data. <strong>Analysis and exploitation</strong> can be accelerated by those tools, but FM 2-0 says its critical thinking and contextual understanding "fundamentally require human judgment." That line is the thesis of this course.</p></div>
+        <div class="card"><span class="chip g">Human-machine teaming</span><p class="sub" style="margin:0">Exploitation uses human-machine teaming to produce <strong>multidiscipline intelligence</strong> (the term FM 2-0 now uses in place of all-source). Information must be evaluated and corroborated for reliability, validity, and relevance before it reaches a product.</p></div>
       </div>
     </section>
 
@@ -340,13 +370,104 @@
       </div>
 
       <h3>The building arc</h3>
-      <div class="tblwrap">
+      <div class="tblwrap wide">
       <table class="tbl">
-        <thead><tr><th scope="col">Module</th><th scope="col">You produce</th></tr></thead>
-        <tr><td class="t">01</td><td>A framed I&amp;W problem (requirements, indicators), a manually built observation log for a set window, and a baseline assessment using one structured technique. You feel the overload directly.</td></tr>
-        <tr><td class="t">02</td><td>The same data, now structured and analyzed with data methods and AI (search, summarize, extract, translate), an ACH on one incident, and a human-versus-AI product comparison with calibrated confidence.</td></tr>
-        <tr><td class="t">03</td><td>A working "mini watch" tool hosted on GitHub that automates part of the workflow, a final fused I&amp;W product, and a capstone brief, all measured against the characteristics.</td></tr>
+        <thead><tr><th scope="col">Module</th><th scope="col">Intelligence process steps</th><th scope="col">You produce</th></tr></thead>
+        <tr><td class="t">01</td><td>Plan and direct &middot; Collect</td><td>A framed I&amp;W problem (requirements, indicators), a manually built observation log for a set window, and a baseline assessment using one structured technique. You feel the overload directly.</td></tr>
+        <tr><td class="t">02</td><td>Process and exploit &middot; Analyze and produce</td><td>The same data, now structured and analyzed with data methods and AI (search, summarize, extract, translate), an ACH on one incident, and a human-versus-AI product comparison with calibrated confidence.</td></tr>
+        <tr><td class="t">03</td><td>Disseminate and integrate &middot; Evaluate and provide feedback</td><td>A working "mini watch" tool hosted on GitHub that automates part of the workflow, a final fused I&amp;W product, and a capstone brief, all measured against the characteristics.</td></tr>
       </table>
+      </div>
+    </section>
+
+    <!-- SCHEDULE -->
+    <section id="schedule">
+      <div class="eyebrow">Plan the Event</div>
+      <h2>Schedule Options</h2>
+      <p class="sub">The content is the same in every option; only the pacing changes. Longer formats give a better collection window and a stronger capstone. Shorter formats depend on pre-work and steer cells toward Track 1 or a provided Track 2 starter. Times are planning figures; the <a href="facilitator.html#timing">facilitator's guide</a> covers how to cut or stretch each block.</p>
+
+      <div class="tabs" role="tablist" aria-label="Schedule options">
+        <button role="tab" id="tab-a" aria-controls="sched-a" aria-selected="false" tabindex="-1">One day</button>
+        <button role="tab" id="tab-b" aria-controls="sched-b" aria-selected="true">Three sessions</button>
+        <button role="tab" id="tab-c" aria-controls="sched-c" aria-selected="false" tabindex="-1">Six short sessions</button>
+        <button role="tab" id="tab-d" aria-controls="sched-d" aria-selected="false" tabindex="-1">Four weeks, blended</button>
+      </div>
+
+      <div class="tabpanel" role="tabpanel" id="sched-a" aria-labelledby="tab-a">
+        <h3>Option A &middot; One-day intensive</h3>
+        <p class="sub"><strong>One large session, about 8 hours of instruction.</strong> Best for a training holiday or an off-site. Requires pre-work: all Module 01 and 02 readings, a GitHub account, and a capstone track chosen in advance. Cells build Track 1, or Track 2 from a provided starter notebook. The collection window shrinks to 45 minutes, so the overload lesson comes from volume, not duration.</p>
+        <div class="tblwrap wide">
+        <table class="tbl">
+          <thead><tr><th scope="col">Time</th><th scope="col">Min</th><th scope="col">Block</th><th scope="col">Output</th></tr></thead>
+          <tr><td class="t">0800</td><td>30</td><td>Welcome, guardrails brief, rubric and FM 2-0 anchor</td><td>Guardrails acknowledged</td></tr>
+          <tr><td class="t">0830</td><td>45</td><td>Module 01 discussion</td><td>&mdash;</td></tr>
+          <tr><td class="t">0915</td><td>75</td><td>Phase 1: frame (20), collect (45), assess (10)</td><td>PIR/SIRs, collection log, baseline</td></tr>
+          <tr><td class="t">1030</td><td>15</td><td>Break</td><td>&mdash;</td></tr>
+          <tr><td class="t">1045</td><td>45</td><td>Module 02 discussion; ACH walk-through</td><td>&mdash;</td></tr>
+          <tr><td class="t">1130</td><td>60</td><td>Phase 2: structure and augment, then verify</td><td>Structured table, verified entities</td></tr>
+          <tr><td class="t">1230</td><td>45</td><td>Lunch</td><td>&mdash;</td></tr>
+          <tr><td class="t">1315</td><td>40</td><td>Phase 2: ACH, compare, and calibrate</td><td>ACH matrix, two assessments</td></tr>
+          <tr><td class="t">1355</td><td>25</td><td>Module 03 discussion (short form)</td><td>Tool scope sentence</td></tr>
+          <tr><td class="t">1420</td><td>90</td><td>Phase 3: build, host, and write the product</td><td>Live repo, fused product</td></tr>
+          <tr><td class="t">1550</td><td>45</td><td>Capstone briefs (5 min per cell)</td><td>Briefs</td></tr>
+          <tr><td class="t">1635</td><td>25</td><td>AAR: evaluate and provide feedback</td><td>AAR notes</td></tr>
+        </table>
+        </div>
+      </div>
+
+      <div class="tabpanel" role="tabpanel" id="sched-b" aria-labelledby="tab-b">
+        <h3>Option B &middot; Three sessions <span class="chip a">Recommended</span></h3>
+        <p class="sub"><strong>Three 3-hour sessions, about a week apart (9 hours plus homework).</strong> The design default: one module per session. Cells keep collecting between sessions, which gives a real week-long observation window and time to build a Track 2 or Track 3 capstone.</p>
+        <div class="tblwrap wide">
+        <table class="tbl">
+          <thead><tr><th scope="col">Session</th><th scope="col">Min</th><th scope="col">Block</th><th scope="col">Between sessions</th></tr></thead>
+          <tr><td class="t">1</td><td>20</td><td>Welcome, guardrails brief, rubric and FM 2-0 anchor</td><td rowspan="5">Continue the collection log all week (15 min a day). Read the Module 02 readings, including ICD 203.</td></tr>
+          <tr><td class="t">1</td><td>50</td><td>Module 01 discussion</td></tr>
+          <tr><td class="t">1</td><td>10</td><td>Break</td></tr>
+          <tr><td class="t">1</td><td>80</td><td>Phase 1: frame, collect, assess</td></tr>
+          <tr><td class="t">1</td><td>20</td><td>Check on learning; hand-off</td></tr>
+          <tr><td class="t">2</td><td>15</td><td>Collection-log review: what the week of overload taught</td><td rowspan="5">Choose a track and start the repo. Read the Module 03 readings.</td></tr>
+          <tr><td class="t">2</td><td>45</td><td>Module 02 discussion</td></tr>
+          <tr><td class="t">2</td><td>10</td><td>Break</td></tr>
+          <tr><td class="t">2</td><td>95</td><td>Phase 2: structure, augment, verify, ACH, compare</td></tr>
+          <tr><td class="t">2</td><td>15</td><td>Check on learning; hand-off</td></tr>
+          <tr><td class="t">3</td><td>35</td><td>Module 03 discussion</td><td rowspan="5">Optional: 30-day follow-up to see whether any cell kept its tool running.</td></tr>
+          <tr><td class="t">3</td><td>70</td><td>Phase 3: finish the tool, write the product</td></tr>
+          <tr><td class="t">3</td><td>10</td><td>Break</td></tr>
+          <tr><td class="t">3</td><td>45</td><td>Capstone briefs (5 min per cell)</td></tr>
+          <tr><td class="t">3</td><td>20</td><td>AAR: evaluate and provide feedback</td></tr>
+        </table>
+        </div>
+      </div>
+
+      <div class="tabpanel" role="tabpanel" id="sched-c" aria-labelledby="tab-c">
+        <h3>Option C &middot; Six short sessions</h3>
+        <p class="sub"><strong>Six 90-minute sessions (9 hours), weekly or twice a week.</strong> Fits a standing OPD hour or a lunch-and-learn. Each module splits into a discussion session and a working session. Short sessions mean the practical work happens mostly as homework, so assign it explicitly.</p>
+        <div class="tblwrap wide">
+        <table class="tbl">
+          <thead><tr><th scope="col">Session</th><th scope="col">In the room (90 min)</th><th scope="col">Homework before the next session</th></tr></thead>
+          <tr><td class="t">1</td><td>Guardrails brief (15), rubric and FM 2-0 anchor (15), Module 01 discussion (45), frame the PIR/SIRs (15)</td><td>Finish the indicator list; start the collection log</td></tr>
+          <tr><td class="t">2</td><td>Collection-log review (30), assess and baseline (30), Module 01 check on learning (30)</td><td>Module 02 readings, including ICD 203</td></tr>
+          <tr><td class="t">3</td><td>Module 02 discussion (45), structure the log and run the AI functions (45)</td><td>Verify every AI claim; audit the entity sample</td></tr>
+          <tr><td class="t">4</td><td>ACH on one incident (50), compare and calibrate (25), Module 02 check on learning (15)</td><td>Module 03 readings; choose a track</td></tr>
+          <tr><td class="t">5</td><td>Module 03 discussion (35), scope the tool (10), build clinic with the facilitator (45)</td><td>Finish and host the tool; write the fused product</td></tr>
+          <tr><td class="t">6</td><td>Capstone briefs (60), AAR (30)</td><td>&mdash;</td></tr>
+        </table>
+        </div>
+      </div>
+
+      <div class="tabpanel" role="tabpanel" id="sched-d" aria-labelledby="tab-d">
+        <h3>Option D &middot; Four weeks, blended</h3>
+        <p class="sub"><strong>Self-paced work with three live sessions (about 4.5 hours live and 6 to 8 hours self-paced).</strong> Suits dispersed formations, multiple time zones, or a unit that cannot pull everyone at once. Students use this site's progress tracker; the facilitator checks hand-offs at each live session.</p>
+        <div class="tblwrap wide">
+        <table class="tbl">
+          <thead><tr><th scope="col">Week</th><th scope="col">Live</th><th scope="col">Self-paced</th></tr></thead>
+          <tr><td class="t">1</td><td><strong>Kickoff, 60 min:</strong> guardrails brief, scenario, rubric, FM 2-0 anchor; frame the PIR together</td><td>Module 01 readings; SIRs and indicators; collection log every day; baseline by the end of the week</td></tr>
+          <tr><td class="t">2</td><td>&mdash;</td><td>Module 02 readings; post the Module 01 and 02 discussion answers in the cell's shared channel; structure the log and run the AI functions</td></tr>
+          <tr><td class="t">3</td><td><strong>Analysis seminar, 90 min:</strong> Module 01 and 02 discussion highlights, ACH on one incident together, compare and calibrate</td><td>Module 03 readings; choose a track; build and host the tool</td></tr>
+          <tr><td class="t">4</td><td><strong>Capstone, 120 min:</strong> Module 03 discussion (30), briefs (60), AAR (30)</td><td>Write the fused product before the session</td></tr>
+        </table>
+        </div>
       </div>
     </section>
 
@@ -359,7 +480,7 @@
 
       <h4>Learning outcomes</h4>
       <ul class="clean">
-        <li>Convert a commander's problem into PIRs, SIRs, and observable indicators.</li>
+        <li>Plan and direct: convert a commander's problem into intelligence requirements (a PIR broken into SIRs) and observable indicators.</li>
         <li>Identify three biases that degrade analysis and a mitigation for each.</li>
         <li>Collect from three live streams and rate each source's reliability.</li>
         <li>Explain why "more collection" can degrade decision quality.</li>
@@ -368,7 +489,8 @@
 
       <h4>Required reading</h4>
       <label class="track"><input type="checkbox" class="track-check" data-id="m1r1"><span class="box"><svg viewBox="0 0 12 12"><path d="M1 6l3.5 3.5L11 2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lab">Heuer, <a href="https://www.cia.gov/resources/csi/books-monographs/psychology-of-intelligence-analysis-2/" target="_blank" rel="noopener"><em>Psychology of Intelligence Analysis</em></a> &mdash; intro plus the chapters on perception, memory, and biases in evaluating evidence and cause/effect.<small>Free from the CIA Center for the Study of Intelligence &middot; Chapter 8 (ACH) is used again in Module 02</small></span></label>
-      <label class="track"><input type="checkbox" class="track-check" data-id="m1r4"><span class="box"><svg viewBox="0 0 12 12"><path d="M1 6l3.5 3.5L11 2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lab">ATP 2-22.9, <em>Open-Source Intelligence</em> &mdash; skim the chapters on OSINT planning and collection, publicly available information, and OPSEC considerations.<small>Army doctrine for OSINT &middot; available from <a href="https://armypubs.army.mil" target="_blank" rel="noopener">Army Publishing Directorate</a></small></span></label>
+      <label class="track"><input type="checkbox" class="track-check" data-id="m1r4"><span class="box"><svg viewBox="0 0 12 12"><path d="M1 6l3.5 3.5L11 2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lab">ATP 2-22.9-1, <em>Publicly Available Information Research and Open-Source Intelligence</em> (October 2023) &mdash; skim the chapters on PAI research, OSINT planning and collection, and OPSEC considerations.<small>The OSINT doctrine FM 2-0 (2026) points to &middot; available from <a href="https://armypubs.army.mil" target="_blank" rel="noopener">Army Publishing Directorate</a></small></span></label>
+      <label class="track"><input type="checkbox" class="track-check" data-id="m1r5"><span class="box"><svg viewBox="0 0 12 12"><path d="M1 6l3.5 3.5L11 2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lab">FM 2-0, <em>Intelligence</em> (October 2026) &mdash; Introduction and Chapter 1, Section I and the Intelligence Process (paragraphs 1-1 to 1-39).<small>The characteristics of effective intelligence, the intelligence process, and the AI/ML and data-literacy notes &middot; <a href="https://armypubs.army.mil" target="_blank" rel="noopener">Army Publishing Directorate</a></small></span></label>
       <label class="track"><input type="checkbox" class="track-check" data-id="m1r2"><span class="box"><svg viewBox="0 0 12 12"><path d="M1 6l3.5 3.5L11 2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lab"><a href="https://smallwarsjournal.com/2026/04/21/drowning-in-data-solving-the-data-overload-problem-in-osint/" target="_blank" rel="noopener">"Drowning in Data: Solving the Data Overload Problem in OSINT"</a> (Small Wars Journal, 2026) &mdash; read in full.<small>The problem statement for the whole program</small></span></label>
       <label class="track"><input type="checkbox" class="track-check" data-id="m1r3"><span class="box"><svg viewBox="0 0 12 12"><path d="M1 6l3.5 3.5L11 2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lab">Supplemental: <a href="https://www.nationalacademies.org/publications/13062" target="_blank" rel="noopener"><em>Intelligence Analysis: Behavioral and Social Scientific Foundations</em></a> (National Academies, 2011) &mdash; summary and analytic-methods chapter.<small>Grounds discussion in evidence, not anecdote</small></span></label>
 
@@ -378,7 +500,8 @@
         <li>"Drowning in Data" calls overload a flaw in institutional design more than a technical problem. Do you agree? What in your formation's design makes overload worse?</li>
         <li>The article names hallucination, automation bias, and adversarial manipulation as new AI risks. Which worries you most for an OSINT cell, and why?</li>
         <li>The event cycle moves in hours and minutes; doctrine often moves in days and weeks. What breaks first when your analytic cycle is slower than the event cycle?</li>
-        <li>Map each characteristic of effective intelligence to NORTH WATCH. Which is hardest with open sources alone?</li>
+        <li>Map each of FM 2-0's nine characteristics of effective intelligence to NORTH WATCH. Which is hardest to meet with open sources alone?</li>
+        <li>FM 2-0 says the intelligence process steps often overlap rather than run in sequence. Where in your Phase 1 work did plan and direct and collect blur together, and was that a problem?</li>
         <li>When is collecting <em>less</em> the right call, and how would you justify that to a commander who equates more reporting with more security?</li>
       </ol>
 
@@ -389,7 +512,7 @@
       <div class="out"><b>Hand-off &rsaquo;</b> Keep the framed problem, the collection log, and the baseline. Module 02 structures and analyzes them.</div>
 
       <h4>Check on learning</h4>
-      <p class="sub">Define PIR/SIR/indicator. Name three biases and a mitigation for each. State the reliability scale. Then grade your baseline against the rubric &mdash; the bar this module is <strong>accurate &amp; reliable</strong> and <strong>complete</strong>: did you separate fact from assumption, rate sources, and avoid overattribution?</p>
+      <p class="sub">Define PIR/SIR/indicator. Name three biases and a mitigation for each. State the reliability scale. Name the six intelligence process steps. Then grade your baseline against the rubric &mdash; the bar this module is <strong>accurate</strong>, <strong>reliable</strong>, and <strong>complete</strong>: did you separate fact from assumption, rate sources, and avoid overattribution?</p>
     </section>
 
     <!-- MODULE 2 -->
@@ -401,16 +524,18 @@
 
       <h4>Learning outcomes</h4>
       <ul class="clean">
-        <li>Structure unstructured reporting into a consistent schema (who, what, where, when, source, reliability).</li>
+        <li>Process and exploit: structure unstructured reporting into a consistent schema (who, what, where, when, source, reliability), applying FM 2-0's data-literacy standard.</li>
+        <li>Distinguish PED, where AI/ML increasingly structures and fuses data, from analysis and exploitation, where human judgment is required.</li>
         <li>Use AI for search, summarization, and entity extraction, and state the limitation of each.</li>
         <li>Run an Analysis of Competing Hypotheses on one incident, using AI as devil's advocate without surrendering judgment.</li>
-        <li>Verify AI outputs against sources, detect hallucination, and assign calibrated confidence.</li>
+        <li>Analyze and produce: verify AI outputs against sources, detect hallucination, and state likelihood and confidence to the ICD 203 standard.</li>
         <li>Compare a human-only product to an AI-augmented one against the characteristics.</li>
       </ul>
 
       <h4>Required reading</h4>
       <label class="track"><input type="checkbox" class="track-check" data-id="m2r1"><span class="box"><svg viewBox="0 0 12 12"><path d="M1 6l3.5 3.5L11 2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lab"><a href="https://www.frontiersin.org/journals/human-dynamics/articles/10.3389/fhumd.2025.1540450/full" target="_blank" rel="noopener">Nitzl et al., "The Use of Artificial Intelligence in Military Intelligence"</a> (Frontiers, 2025) &mdash; read in full.<small>The empirical backbone: 30 participants, AI vs control, three functions tested</small></span></label>
       <label class="track"><input type="checkbox" class="track-check" data-id="m2r2"><span class="box"><svg viewBox="0 0 12 12"><path d="M1 6l3.5 3.5L11 2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lab"><a href="https://www.sciencedirect.com/science/article/pii/S187705091502983X" target="_blank" rel="noopener">"Extracting Meaningful Entities from Human-Generated Tactical Reports"</a> &mdash; the entity-extraction concept you apply by hand and with AI.<small>Note the warning: incorrect tagging is a real failure mode</small></span></label>
+      <label class="track"><input type="checkbox" class="track-check" data-id="m2r4"><span class="box"><svg viewBox="0 0 12 12"><path d="M1 6l3.5 3.5L11 2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lab">ODNI, <a href="https://www.dni.gov/files/documents/ICD/ICD-203.pdf" target="_blank" rel="noopener">Intelligence Community Directive 203, <em>Analytic Standards</em></a> &mdash; read in full (about six pages).<small>The analytic tradecraft standards, including how to express uncertainty &middot; listed among FM 2-0's intelligence authority sources (table C-1) &middot; opens as a PDF download</small></span></label>
       <label class="track"><input type="checkbox" class="track-check" data-id="m2r3"><span class="box"><svg viewBox="0 0 12 12"><path d="M1 6l3.5 3.5L11 2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lab">Supplemental: <a href="https://link.springer.com/article/10.1007/s42979-021-00765-8" target="_blank" rel="noopener">"Data Science and Analytics: An Overview"</a> (Springer) for shared vocabulary, plus the front half of Brown, "Developing Readiness to Trust AI within Warfighting Teams."<small>Sets up the trust discussion this module makes measurable</small></span></label>
 
       <h4>Discussion</h4>
@@ -420,7 +545,9 @@
         <li>The authors flag data protection and confidentiality as central. What is the bright line you will never cross with a public AI tool? (Anchor to Guardrails.)</li>
         <li>Brown frames trust in AI as something to be <em>developed</em>. What would have to be true about a tool before you let its output into a decision product?</li>
         <li>Where does ACH protect you from the biases Heuer described? Where could AI quietly reintroduce them?</li>
-        <li>Re-grade your Module 01 product now that it is structured. Which characteristic improved most from structuring alone, before any AI?</li>
+        <li>FM 2-0 separates PED, which will "increasingly rely on" AI/ML, from analysis and exploitation, whose critical thinking and contextual understanding "fundamentally require human judgment." In your Phase 2 work, which AI step was PED and which crossed into analysis? Did you notice when it crossed?</li>
+        <li>ICD 203 requires analysts to describe the quality and credibility of their sources and to express uncertainty properly. Which of its standards did your AI-augmented assessment fall short on first?</li>
+        <li>Re-grade your Module 01 product now that it is structured. Which characteristic improved most from structuring alone, before any AI? (FM 2-0's <strong>usable</strong> is a likely answer: data in a consistent format.)</li>
       </ol>
 
       <h4>Practical exercise &middot; Phase 2: Structure, augment, verify</h4>
@@ -431,7 +558,7 @@
       <div class="out"><b>Hand-off &rsaquo;</b> Keep the structured table, the verified entity set, the ACH matrix, and the comparison. This is the engine your Module 03 tool will automate.</div>
 
       <h4>Check on learning</h4>
-      <p class="sub">Name the three AI functions and a limitation of each. State Heuer's eight ACH steps (see Templates). Express one judgment with both a likelihood term and a separate confidence level. Define hallucination and automation bias with a NORTH WATCH example of each. Did you catch at least one AI error? The augmented product should be more <strong>timely</strong> and <strong>complete</strong> without losing <strong>accurate &amp; reliable</strong>.</p>
+      <p class="sub">Name the three AI functions and a limitation of each. State Heuer's eight ACH steps (see Templates). Express one judgment with both a likelihood term and a separate confidence level. Define hallucination and automation bias with a NORTH WATCH example of each. Did you catch at least one AI error? Explain the difference between PED and analysis and exploitation. The augmented product should be more <strong>timely</strong> and <strong>complete</strong> without becoming less <strong>accurate</strong> or <strong>reliable</strong>.</p>
     </section>
 
     <!-- MODULE 3 -->
@@ -447,7 +574,8 @@
         <li>Build a working tool at your chosen track that automates collection, structuring, or summarization.</li>
         <li>Host it on GitHub with a clear README and an OPSEC/data-rights statement another analyst could follow.</li>
         <li>Produce a final fused I&amp;W product covering most likely and most dangerous COAs.</li>
-        <li>Brief the tool and product, stating where AI was used, how it was verified, and what the tool cannot do.</li>
+        <li>Disseminate and integrate: brief the tool and product, stating where AI was used, how it was verified, and what the tool cannot do.</li>
+        <li>Evaluate and provide feedback: collect peer feedback on the product and the tool, and record what you would change.</li>
       </ul>
 
       <h4>Required reading</h4>
@@ -460,7 +588,8 @@
         <li>What is the most useful action you would let an agent take unattended in NORTH WATCH, and the first action you would never automate?</li>
         <li>Your tool will eventually be wrong. What is its failure mode, who notices, and how fast? If you cannot answer, it is not ready for a real product.</li>
         <li>Re-read Brown after building. Would you trust your own tool in a product for a commander? What single change moves it from demo to trusted teammate?</li>
-        <li>Which characteristic does your tool most improve (usually timely or complete), and which does it most endanger (usually accurate &amp; reliable)? How does the design protect the one at risk?</li>
+        <li>Which characteristic does your tool most improve (usually timely, usable, or complete), and which does it most endanger (usually accurate or reliable)? How does the design protect the one at risk?</li>
+        <li>FM 2-0 says the Army "will likely implement fully in the near future" automated processing, and requires data to be visible, accessible, understandable, linked, trustworthy, interoperable, and secure. Which of those seven does your tool's output fail, and what would fix it?</li>
       </ol>
 
       <h4>Practical exercise &middot; Phase 3: Ship it</h4>
@@ -602,8 +731,9 @@
         <div class="card">
           <h3>Intelligence oversight</h3>
           <ul class="clean">
-            <li>Comply with EO 12333, AR 381-10, DoDM 5240.01, DoDI 3115.18 (DoD access to and use of publicly available information), and USAREUR-AF guidance.</li>
-            <li>Do not intentionally collect, retain, or disseminate information on US persons except as authorities permit.</li>
+            <li>Comply with EO 12333 (as amended), DODD 5240.01, DODM 5240.01, AR 381-10, DODD 5148.13 (Intelligence Oversight), DoDI 3115.18 (DoD access to and use of publicly available information), Army Directive 2016-37 (U.S. Army Open-Source Intelligence Activities), and USAREUR-AF guidance. FM 2-0 (2026), appendix C, summarizes these authorities.</li>
+            <li>FM 2-0 requires a documented mission and authority for any intelligence activity, and intelligence oversight training before collecting. This OPD is training on publicly available information, not an intelligence collection mission; your command decides whether any part of it needs more authority.</li>
+            <li>Do not intentionally collect, retain, or disseminate information on U.S. persons except as authorities permit (DODM 5240.01, procedures 2 through 4).</li>
             <li>Coordinate this OPD with your command's oversight and legal/SJA points of contact before execution. If unsure a task is permissible, stop and ask.</li>
           </ul>
         </div>
@@ -731,7 +861,7 @@ Which AI functions are used and how a human verifies the output.</pre>
       <p class="note">This site is itself a Track 1 example: a static page on GitHub Pages with a README and OPSEC/data-rights statement. <a href="https://github.com/PrestonDihle/12th-CAB-Intel-OPD" target="_blank" rel="noopener">View the repo</a>.</p>
 
       <div class="divider"></div>
-      <p class="note">Companion site to the full facilitator's guide. Unclassified // for training use only. Coordinate with intelligence oversight and SJA before execution.</p>
+      <p class="note">Companion site to the <a href="facilitator.html">facilitator's guide</a>. Unclassified // for training use only. Coordinate with intelligence oversight and SJA before execution.</p>
     </section>
   </main>
 </div>
@@ -847,7 +977,37 @@ Which AI functions are used and how a human verifies the output.</pre>
   });
   syncInert();
 
-  var navAnchors = Array.prototype.slice.call(document.querySelectorAll(".navlist a"));
+  // Schedule tabs (WAI-ARIA tabs pattern). Without JS every panel stays visible.
+  var tabs = Array.prototype.slice.call(document.querySelectorAll(".tabs [role=tab]"));
+  var TAB_KEY = "northwatch.schedule.v1";
+  function selectTab(tab, focus){
+    tabs.forEach(function(t){
+      var on = t === tab;
+      t.setAttribute("aria-selected", on ? "true" : "false");
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute("aria-controls")).hidden = !on;
+    });
+    if(focus) tab.focus();
+    store.set(TAB_KEY, tab.id);
+  }
+  if(tabs.length){
+    var saved = document.getElementById(store.get(TAB_KEY) || "");
+    var initial = (saved && tabs.indexOf(saved) > -1) ? saved : (tabs.filter(function(t){ return t.getAttribute("aria-selected") === "true"; })[0] || tabs[0]);
+    selectTab(initial, false);
+    tabs.forEach(function(t, i){
+      t.addEventListener("click", function(){ selectTab(t, false); });
+      t.addEventListener("keydown", function(e){
+        var n = null;
+        if(e.key === "ArrowRight") n = tabs[(i + 1) % tabs.length];
+        else if(e.key === "ArrowLeft") n = tabs[(i - 1 + tabs.length) % tabs.length];
+        else if(e.key === "Home") n = tabs[0];
+        else if(e.key === "End") n = tabs[tabs.length - 1];
+        if(n){ e.preventDefault(); selectTab(n, true); }
+      });
+    });
+  }
+
+  var navAnchors = Array.prototype.slice.call(document.querySelectorAll('.navlist a[href^="#"]'));
   var sections = navAnchors.map(function(a){ return document.querySelector(a.getAttribute("href")); });
   if("IntersectionObserver" in window){
     var io = new IntersectionObserver(function(entries){

@@ -1,6 +1,6 @@
 # From Signal to System: Intelligence OPD
 
-A three-session, case-study-based officer professional development (OPD) program for the intelligence warfighting function. It covers fusing traditional analysis, data-driven methods, and AI. One scenario, **Exercise NORTH WATCH** (indications and warning on grey-zone threats to Baltic undersea infrastructure), runs through all three sessions and ends with each cell hosting its own tool on GitHub.
+A three-module, case-study-based officer professional development (OPD) program for the intelligence warfighting function. It covers fusing traditional analysis, data-driven methods, and AI. One scenario, **Exercise NORTH WATCH** (indications and warning on grey-zone threats to Baltic undersea infrastructure), runs through all three modules and ends with each cell hosting its own tool on GitHub.
 
 **Live site:** https://prestondihle.github.io/12th-CAB-Intel-OPD/
 
@@ -15,7 +15,8 @@ A static companion site for students and facilitators. It holds the learning out
 ## Contents
 | Path | What it is |
 | --- | --- |
-| `index.html` | The whole site: HTML, CSS, and JS in one file |
+| `index.html` | The student site: HTML, CSS, and JS in one file |
+| `facilitator.html` | Facilitator's guide: coordination, schedule options, module notes, answer keys, grading, AAR |
 | `fonts/` | Self-hosted IBM Plex and Saira Condensed fonts (SIL OFL 1.1; licenses included) |
 | `templates/` | Downloadable collection log and ACH matrix (CSV), fused product, and capstone README (Markdown) |
 | `.github/workflows/links.yml` | Weekly link check, since tools and articles move |
